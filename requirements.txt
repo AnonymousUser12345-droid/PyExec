@@ -1,0 +1,7 @@
+art
+simpleeval
+zxcvbn
+holidays
+requests
+speedtest-cli
+password-strength
