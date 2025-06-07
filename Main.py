@@ -36,11 +36,10 @@ data = {
 "Username": "",
 "Loading": "",
 }
-if not os.path.exists("Data"):
-    with shelve.open("Data") as data:
-        for variable, value in data.items():
-            if variable in data:pass
-            else:data[variable] = value
+with shelve.open("Data") as db:
+    for variable, value in data.items():
+        if variable in db:pass
+        else:db[variable] = value
 
 #####---------- Get Data ----------#####
 
