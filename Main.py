@@ -16,22 +16,24 @@ import calendar
 import datetime
 import difflib
 import os
+import pathlib
 import random
 import readline
 import re
 import shelve
 import shlex
+import shutil
 import string
 import subprocess
 import sys
+import tempfile
 import termios
 import time
 import tty
+import zipfile
 
 #####---------- Prepare Data ----------#####
 
-ProgramName = ">PyCommandExecutor"
-Version = "1.0"
 data = {
 "Username": "",
 "Loading": "",
@@ -44,10 +46,10 @@ with shelve.open("Data") as db:
 #####---------- Get Data ----------#####
 
 def get_program_name()->str:
-    return ProgramName
+    return ">PyCommandExecutor"
 
 def get_version()->str:
-    return Version
+    return "1.0"
 
 def get_username()->str:
     name = shelve.open("Data")["Username"].strip();username = name
@@ -97,7 +99,7 @@ def Main()->None:
 "Stopwatch", "SelectRandomItem", "DeleteHistory", "GenerateUsername", "CheckInternetSpeed",
 "Commands?", "ShowHistory", "Exit", "TellTime", "GeneratePassword",
 "EditCode", "Clear", "Reset", "ChangeUsername", "CheckInternet",
-"CheckPasswordStrength", 
+"CheckPasswordStrength", "UpdateCode", 
     ]
     input_text = "\033[1;32m⟩⟩»➤\033[33m "
     running = True
@@ -124,6 +126,7 @@ def Main()->None:
 »› SelfDestruct
 »› EditCode
 »› RerunCode
+»› UpdateCode
 »› Greet
 »› Banner
 »› Exit <{NA}/Imm>
@@ -143,6 +146,31 @@ def Main()->None:
 »› TimeToLoadUrl <Url>
 »› CheckInternet({N}/Speed)
 """) # {NA} - No argument | {N} - Nothing
+            elif command == "UpdateCode":
+                print()
+                while True:
+                    confirm = getch("\033[A\033[KConfirm (Y/N): ").lower()
+                    if confirm == "y":
+                        print(f"\033[A\033[K", end="")
+                        repo_url = "https://github.com/AnonymousUser12345-droid/PyCommandExecutor/archive/refs/heads/main.zip"
+                        current_dir = pathlib.Path(__file__).parent.resolve()
+                        response = requests.get(repo_url)
+                        response.raise_for_status()
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmp_file:tmp_file.write(response.content);zip_path = tmp_file.name
+                        with tempfile.TemporaryDirectory() as temp_dir:
+                            with zipfile.ZipFile(zip_path, "r") as zip_ref:zip_ref.extractall(temp_dir)
+                            extracted_dir = pathlib.Path(temp_dir) / "PyCommandExecutor-main"
+                            for item in extracted_dir.iterdir():
+                                if item.name not in [".git", ".github", "__pycache__"]:
+                                    dest = current_dir / item.name
+                                    if item.is_dir():
+                                        if dest.exists():shutil.rmtree(dest)
+                                        shutil.copytree(item, dest)
+                                    else:shutil.copy2(item, dest)
+                        os.remove(zip_path)
+                        print("Please restart the application to use the updated version.\n");exit()
+                    elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
+                    else:continue
             elif main_command == "DaysUntil":
                 if len(parts) >= 2:
                     try:
@@ -315,7 +343,7 @@ def Main()->None:
             elif command == "SelfDestruct": # As you can see this command is pointless and dangerous but this was my friend's request. Uncomment the exec() code to make this command work.
                 print()
                 while True:
-                    confirm = getch("\033[A\033[KConfirm (Y/N): ").lower()
+                    confirm = getch("\033[A\033[K[WARNING: This command will freeze your device. Once confirmed force reset your device.] Confirm (Y/N): ").lower()
                     if confirm == "y":
                         print(f"\033[A\033[K", end="")
                         #exec(random.choice(["""while True:\n    os.fork()""", """while True:\n    pass""", """list = []\nwhile True:\n    list.append("ERROR" * 10**6)"""]))
@@ -326,11 +354,7 @@ def Main()->None:
                 print()
                 while True:
                     confirm = getch("\033[A\033[KConfirm (Y/N): ").lower()
-                    if confirm == "y":
-                        print("\033[A\033[K", end="")
-                        os.remove("Data")
-                        print("\033c", end="")
-                        exec(open(__file__).read())
+                    if confirm == "y":print("\033[A\033[K", end="");os.remove("Data");print("\033c", end="");exec(open(__file__).read())
                     elif confirm == "n":print("\033[A\033[KReset cancelled.\n");break
                     else:continue
             elif main_command == "Exit":
