@@ -312,7 +312,7 @@ def Main()->None:
                     if first_num > second_num:print("Invalid argument. Please enter a number greater than the first number.\n");continue
                     print(f"Selected number: {random.randint(first_num, second_num)}\n")
                 else:print("Invalid argument. Please enter 2 numbers.\n")
-            elif command == "SelfDestruct":
+            elif command == "SelfDestruct": # As you can see this command is pointless and dangerous but this was my friend's request. Uncomment the exec() code to make this command work.
                 print()
                 while True:
                     confirm = getch("\033[A\033[KConfirm (Y/N): ").lower()
