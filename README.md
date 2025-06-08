@@ -17,6 +17,8 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 
 ## Installation
 
+Run this command in your terminal:
+
 ```bash
 pkg upgrade && apt update
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
