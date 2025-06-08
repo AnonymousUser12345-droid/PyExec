@@ -9,7 +9,7 @@ A simple terminal I made.
 
 ## Screenshots
 
-![Terminal Screenshot](screenshot.png)
+![Terminal Screenshot](Screenshot_20250608-185417.jpg)
 
 ## Contributing
 
