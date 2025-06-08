@@ -27,4 +27,4 @@ python Main.py
 
 ## Acknowledgments
 
-- Inspired by ![](https://github.com/termux)
+- Inspired by [Termux](https://github.com/termux)
