@@ -11,7 +11,9 @@ A simple terminal I made.
 
 ![Terminal Screenshot](screenshot.png)
 
+## Contributing
 
+Pull requests are welcome! Feel free to open an issue or submit a PR for improvements.
 
 ## Installation
 
