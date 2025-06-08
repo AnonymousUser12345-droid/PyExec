@@ -9,7 +9,7 @@ A simple terminal I made.
 
 ## Screenshot
 
-![Terminal Screenshot](Screenshot_20250608-185417.jpg)
+(Screenshot_20250608-185417.jpg)
 
 ## Contributing
 
@@ -18,5 +18,9 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 ## Installation
 
 ```bash
-git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor && cd PyCommandExecutor && pip install -r requirements.txt
-
+pkg upgrade
+apt update
+git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
+cd PyCommandExecutor
+pip install -r requirements.txt
+python Main.py
