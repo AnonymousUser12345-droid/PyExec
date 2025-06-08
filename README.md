@@ -9,7 +9,7 @@ A simple terminal I made.
 
 ## Screenshot
 
-[](Screenshot_20250608-185417.jpg)
+![](Screenshot_20250608-185417.jpg)
 
 ## Contributing
 
