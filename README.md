@@ -23,3 +23,7 @@ git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
 pip install -r requirements.txt
 python Main.py
+
+## Acknowledgments
+
+- Inspired by [](https://github.com/termux)
