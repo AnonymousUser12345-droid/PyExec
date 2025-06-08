@@ -1,11 +1,11 @@
 # PyCommandExecutor
 
-A simple terminal I made.
+A simple terminal.
 
 ## Features
 
-- You can calculate arithmec expressions directly into the command prompt
-- It has multiple commands to use
+- Calculate arithmec expressions into the command prompt.
+- Execute multiple commands.
 
 ## Screenshot
 
@@ -18,8 +18,7 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 ## Installation
 
 ```bash
-pkg upgrade
-apt update
+pkg upgrade && apt update
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
 pip install -r requirements.txt
