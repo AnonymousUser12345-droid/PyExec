@@ -7,7 +7,7 @@ A simple terminal I made.
 - You can calculate arithmec expressions directly into the command prompt
 - It has multiple commands to use
 
-## Screenshots
+## Screenshot
 
 ![Terminal Screenshot](Screenshot_20250608-185417.jpg)
 
