@@ -7,6 +7,12 @@ A simple terminal I made.
 - You can calculate arithmec expressions directly into the command prompt
 - It has multiple commands to use
 
+## Screenshots
+
+![Terminal Screenshot](screenshot.png)
+
+
+
 ## Installation
 
 ```bash
