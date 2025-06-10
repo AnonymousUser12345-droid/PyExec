@@ -1,11 +1,12 @@
 # PyCommandExecutor
 
-A simple tool.
-
 ## Features
 
 - Calculate arithmec expressions into the command prompt.
-- Execute multiple commands.
+- Command history to store recent commands.
+- Update code directly in the program.
+- Execute python files.
+- Multiple commands.
 
 ## Screenshot
 
@@ -17,8 +18,6 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 
 ## Installation
 
-Run this command in your terminal:
-
 ```bash
 apt update && apt upgrade
 apt install git python
@@ -27,3 +26,17 @@ cd PyCommandExecutor
 pip install -r requirements.txt
 ```
 
+## Run
+
+```bash
+python Main.py
+```
+
+## Dependecies
+
+• holidays
+• password-strength
+• request
+• simpleeval
+• speedtest-cli
+• zxcvbn
