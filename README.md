@@ -34,14 +34,13 @@ python Main.py
 
 ## Dependecies
 
-• holidays
+• [holidays](https://pypi.org/project/holidays/)
 
-• password-strength
+• [password-strength](https://pypi.org/project/password-strength/)
 
-• request
+• [requests](https://pypi.org/project/requests/)
 
-• simpleeval
+• [simpleeval](https://pypi.org/project/simpleeval/)
 
-• speedtest-cli
-
-• zxcvbn
+• [speedtest-cli](https://pypi.org/project/speedtest-cli/)
+• [zxcvbn](https://pypi.org/project/zxcvbn/)
