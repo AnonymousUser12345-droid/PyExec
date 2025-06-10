@@ -41,6 +41,7 @@ python Main.py
 • request
 
 • simpleeval
+
 • speedtest-cli
 
 • zxcvbn
