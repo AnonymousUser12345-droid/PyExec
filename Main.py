@@ -80,11 +80,11 @@ def get_banner()->str:
 def banner(type:str)->None:
     if type.lower() in ["start", "output"]:print(("\033[92;1m" if type.lower() == "start" else "") + get_banner() + ("\033[0m" if type.lower() == "start" else "") + "\n")
 
-def holiday()->None|str: # Replace US with your country code.
-    return holidays.country_holidays("US").get(datetime.date.today())
+def holiday()->str: # Replace US with your country code.
+    return holidays.country_holidays("US").get(datetime.date.today(), "Today is not a holiday.")
 
 def greet()->None:
-    print(f"Welcome to PyCommandExecutor, {get_username()}!\n\nEnter \"Commands?\" for commands, \"Exit Imm\" to exit.\nUsername: \"{get_username()}\"\nLoading: {get_loading()}\nHoliday: {holiday() if holiday() else 'Today is not a holiday.'}\n{time.strftime(f'Date: %A, %B %d, %Y{chr(10)}Time: %I:%M:%S %p')}\n")
+    print(f"Welcome to PyCommandExecutor, {get_username()}!\n\nEnter \"Commands?\" for commands, \"Exit Imm\" to exit.\nUsername: \"{get_username()}\"\nLoading: {get_loading()}\nHoliday: {holiday()}\n{time.strftime(f'Date: %A, %B %d, %Y{chr(10)}Time: %I:%M:%S %p')}\n")
 
 @atexit.register
 def exit_program()->None:
@@ -316,7 +316,7 @@ def Main()->None:
                 else:print("Invalid argument. Please enter valid time in HH:MM:SS or MM:SS format.\n")
             elif command == "TellTime":
                 while True:
-                    try:print("\r" + time.strftime(f"Holiday: {holiday() if holiday() else 'Today is not a holiday.'} Date: %A, %B %d, %Y Time: %I:%M:%S %p"), end="", flush=True);time.sleep(.001)
+                    try:print("\r" + time.strftime(f"Holiday: {holiday()} Date: %A, %B %d, %Y Time: %I:%M:%S %p"), end="", flush=True);time.sleep(.001)
                     except (KeyboardInterrupt, EOFError):print();print();break
             elif command == "ShowCommandHistory":
                 command_history = shelve.open("Data").get("CommandHistory", [])
