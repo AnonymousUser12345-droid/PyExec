@@ -32,7 +32,7 @@ pip install -r requirements.txt
 python Main.py
 ```
 
-## Dependecies
+## Dependencies
 
 • [holidays](https://pypi.org/project/holidays/)
 
