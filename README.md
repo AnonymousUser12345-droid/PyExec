@@ -1,6 +1,6 @@
 # PyCommandExecutor
 
-A simple terminal.
+A simple tool.
 
 ## Features
 
@@ -20,13 +20,10 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 Run this command in your terminal:
 
 ```bash
-pkg upgrade && apt update
+apt update && apt upgrade
+apt install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
 pip install -r requirements.txt
-python Main.py
 ```
 
-## Acknowledgments
-
-- Inspired by [Termux](https://github.com/termux)
