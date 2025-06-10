@@ -1,4 +1,3 @@
-art
 simpleeval
 zxcvbn
 holidays
