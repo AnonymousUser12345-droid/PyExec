@@ -35,8 +35,13 @@ python Main.py
 ## Dependecies
 
 • holidays
+
 • password-strength
+
 • request
+
 • simpleeval
+
 • speedtest-cli
+
 • zxcvbn
