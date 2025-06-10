@@ -1,6 +1,6 @@
-simpleeval
-zxcvbn
 holidays
-requests
-speedtest-cli
 password-strength
+requests
+simpleeval
+speedtest-cli
+zxcvbn
