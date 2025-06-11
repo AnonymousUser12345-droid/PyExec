@@ -10,7 +10,7 @@
 
 ## Screenshot
 
-![](Screenshot_20250608-185417.jpg)
+![](Screenshot_20250611-132255.jpg)
 
 ## Contributing
 
