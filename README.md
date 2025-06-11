@@ -19,16 +19,11 @@ Pull requests are welcome! Feel free to open an issue or submit a PR for improve
 ## Installation
 
 ```bash
-apt update && apt upgrade
-apt install git python
+pkg update
+pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
 pip install -r requirements.txt
-```
-
-## Run
-
-```bash
 python Main.py
 ```
 
