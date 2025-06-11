@@ -25,9 +25,9 @@ python Main.py
 
 ## Dependencies
 
-• [holidays](https://pypi.org/project/holidays/)[space][space]
-• [password-strength](https://pypi.org/project/password-strength/)
-• [requests](https://pypi.org/project/requests/)
-• [simpleeval](https://pypi.org/project/simpleeval/)
-• [speedtest-cli](https://pypi.org/project/speedtest-cli/)
-• [zxcvbn](https://pypi.org/project/zxcvbn/)
+- [holidays](https://pypi.org/project/holidays/)
+- [password-strength](https://pypi.org/project/password-strength/)
+- [requests](https://pypi.org/project/requests/)
+- [simpleeval](https://pypi.org/project/simpleeval/)
+- [speedtest-cli](https://pypi.org/project/speedtest-cli/)
+- [zxcvbn](https://pypi.org/project/zxcvbn/)
