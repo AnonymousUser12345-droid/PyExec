@@ -2,7 +2,7 @@
 
 ## Functions
 
-```markdown
+```plain
 - ShowCommandHistory
 - DeleteCommandHistory
 - Clear
