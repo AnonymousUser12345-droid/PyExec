@@ -10,11 +10,7 @@
 
 ## Screenshot
 
-![](Screenshot_20250611-132255.jpg)
-
-## Contributing
-
-Pull requests are welcome! Feel free to open an issue or submit a PR for improvements.
+![](screenshot.png)
 
 ## Installation
 
@@ -29,14 +25,9 @@ python Main.py
 
 ## Dependencies
 
-• [holidays](https://pypi.org/project/holidays/)
-
+• [holidays](https://pypi.org/project/holidays/)[space][space]
 • [password-strength](https://pypi.org/project/password-strength/)
-
 • [requests](https://pypi.org/project/requests/)
-
 • [simpleeval](https://pypi.org/project/simpleeval/)
-
 • [speedtest-cli](https://pypi.org/project/speedtest-cli/)
-
 • [zxcvbn](https://pypi.org/project/zxcvbn/)
