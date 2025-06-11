@@ -36,7 +36,7 @@ NA = No argument.
 ## Installation
 
 ```bash
-pkg update
+pkg update && pkg upgrade
 pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
