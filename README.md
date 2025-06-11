@@ -1,12 +1,33 @@
 # PyCommandExecutor
 
-## Features
+## Functions
 
-- Calculate arithmec expressions into the command prompt.
-- Command history to store recent commands.
-- Update code directly in the program.
-- Execute python files.
-- Multiple commands.
+NA = No argument.
+
+- ShowCommandHistory
+- DeleteCommandHistory
+- Clear
+- Reset
+- SelfDestruct
+- RerunCode
+- UpdateCode
+- Exit <{NA}/Imm>
+- ChangeUsername <Username>
+- Loading <True/False/Check>
+- Time
+- DaysUntil <Year-Month-Day> <{NA}/Year-Month-Day>
+- Calendar <{NA}/Year>
+- Timer <Hour-Minute-Second/Minute-Second>
+- Stopwatch <Start/Stop/Reset>
+- SelectRandomItem <ListOfItems>
+- SelectRandomNumber <Number> <Number>
+- GeneratePassword <Length> <NumberOfPasswords> <{NA}/Letters> <{NA}/Numbers> <{NA}/SpecialCharacters>
+- CheckPasswordStrength <Password>
+- GenerateUsername <NumberOfUsernames>
+- Matrix
+- TimeToLoadUrl <Url>
+- CheckInternet
+- CheckInternetSpeed
 
 ## Screenshot
 
