@@ -1,6 +1,6 @@
 # PyCommandExecutor
 
-## Functions
+## Commands
 
 ```plain
 - ShowCommandHistory
