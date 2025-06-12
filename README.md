@@ -54,3 +54,5 @@ python Main.py
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
+- python
+- git
