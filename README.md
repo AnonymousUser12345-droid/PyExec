@@ -32,7 +32,7 @@
 
 ## Screenshot
 
-![](screenshot.png)
+![](Screenshot_20250611-133112~3.jpg)
 
 ## Installation
 
