@@ -42,7 +42,6 @@ pkg update && pkg upgrade
 pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
-pip install -r requirements.txt
 python Main.py
 ```
 
