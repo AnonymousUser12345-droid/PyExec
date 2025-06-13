@@ -5,6 +5,7 @@
 ## Commands
 
 ```plain
+- Commands?
 - ShowCommandHistory
 - DeleteCommandHistory
 - Clear
@@ -12,21 +13,21 @@
 - SelfDestruct
 - RerunCode
 - UpdateCode
-- Exit <NA/Imm>
-- ChangeUsername <Username>
-- Loading <True/False/Check>
+- Exit NA｜(Imm)
+- ChangeUsername <<Username>>
+- Loading (True)｜(False)｜(Check)
 - Time
-- DaysUntil <Year-Month-Day> <NA/Year-Month-Day>
-- Calendar <NA/Year>
-- Timer <Hour-Minute-Second/Minute-Second>
-- Stopwatch <Start/Stop/Reset>
-- SelectRandomItem <ListOfItems>
-- SelectRandomNumber <Number> <Number>
-- GeneratePassword <Length> <NumberOfPasswords> <NA/Letters> <NA/Numbers> <NA/SpecialCharacters>
-- CheckPasswordStrength <Password>
-- GenerateUsername <NumberOfUsernames>
+- DaysUntil <<Year-Month-Day>> NA｜<<Year-Month-Day>>
+- Calendar NA｜<<Year>>
+- Timer <<Hour-Minute-Second>>｜<<Minute-Second>>
+- Stopwatch (Start)｜(Stop)｜(Reset)
+- SelectRandomItem <<ListOfItems>>
+- SelectRandomNumber <<Number>> <<Number>>
+- GeneratePassword <<Length>> <<NumberOfPasswords>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
+- CheckPasswordStrength <<Password>>
+- GenerateUsername <<NumberOfUsernames>>
 - Matrix
-- TimeToLoadUrl <Url>
+- TimeToLoadUrl <<Url>>
 - CheckInternet
 - CheckInternetSpeed
 ```
@@ -37,7 +38,7 @@
 
 ## Installation
 
-```bash
+```plain
 pkg update && pkg upgrade
 pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
@@ -53,5 +54,3 @@ python Main.py
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
-- python
-- git
