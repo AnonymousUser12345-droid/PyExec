@@ -17,9 +17,9 @@
 - ChangeUsername <<Username>>
 - Loading (True)｜(False)｜(Check)
 - Time
-- DaysUntil <<Year-Month-Day>> NA｜<<Year-Month-Day>>
+- DaysUntil <<Year/Month/Day>> NA｜<<Year/Month/Day>>
 - Calendar NA｜<<Year>>
-- Timer <<Hour-Minute-Second>>｜<<Minute-Second>>
+- Timer <<Hour:Minute:Second>>｜<<Minute:Second>>
 - Stopwatch (Start)｜(Stop)｜(Reset)
 - SelectRandomItem <<ListOfItems>>
 - SelectRandomNumber <<Number>> <<Number>>
