@@ -21,9 +21,9 @@
 - Stopwatch (Start)｜(Stop)｜(Reset)
 - SelectRandomItem <<ListOfItems>>
 - SelectRandomNumber <<Number>> <<Number>>
-- GeneratePassword <<Length>> <<NumberOfPasswords>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
+- GeneratePassword <<Length>> <<Quantity>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
 - CheckPasswordStrength <<Password>>
-- GenerateUsername <<NumberOfUsernames>>
+- GenerateUsername <<Quantity>>
 - Matrix
 - TimeToLoadUrl <<Url>>
 - CheckInternet
