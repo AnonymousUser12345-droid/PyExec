@@ -1,12 +1,5 @@
 #####---------- Modules ----------#####
 
-import holidays
-import password_strength
-import requests
-import simpleeval
-import speedtest
-import zxcvbn
-
 from concurrent.futures import ThreadPoolExecutor
 import atexit
 import calendar
@@ -22,19 +15,26 @@ import shelve
 import shlex
 import shutil
 import string
-import subprocess
 import sys
 import tempfile
 import termios
 import time
 import tty
 import zipfile
+try:
+    import holidays
+    import password_strength
+    import requests
+    import simpleeval
+    import speedtest
+    import zxcvbn
+except ModuleNotFoundError:print("Installing packages.\n");os.system("pip install -r requirements.txt")
 
 #####---------- Prepare Data ----------#####
 
 data = {
 "Username": f"User {random.randint(1, 100)}",
-"Loading": "True",
+"Loading": True,
 "CommandHistory": [],
 }
 with shelve.open("Data") as db:
@@ -51,8 +51,8 @@ def get_username()->str:
 
 def get_loading()->bool:
     loading = shelve.open("Data")["Loading"];loading = loading
-    if loading in ["True", "False"]:return True if loading == "True" else False
-    shelve.open("Data")["Loading"] = "True";return True
+    if loading in [True, False]:return loading#True if loading == "True" else False
+    shelve.open("Data")["Loading"] = True;return True
 
 def get_command_history()->list:
     return shelve.open("Data")["CommandHistory"]
@@ -87,12 +87,12 @@ def Main()->None:
           |__/\033[0m\n""")
     print(f"Welcome to PyCommandExecutor, {get_username()}!\n\nEnter \"Commands?\" for commands, \"Exit Imm\" to exit.\nUsername: \"{get_username()}\"\nLoading: {get_loading()}\nHoliday: {holiday()}\n{time.strftime('Date: %A, %B %d, %Y')}\n{time.strftime('Time: %I:%M:%S %p')}\n")
     valid_commands = [
-"Loading", "Rerun", "Matrix", "SelectRandomNumber", "DaysUntil",
-"TimeToLoadUrl", "Timer", "Calendar", "SelfDestruct",
-"Stopwatch", "SelectRandomItem", "DeleteCommandHistory", "GenerateUsername", "CheckInternetSpeed",
-"Commands?", "ShowCommandHistory", "Exit", "Time", "GeneratePassword",
-"Clear", "Reset", "ChangeUsername", "CheckInternet", "CheckPasswordStrength",
-"UpdateCode", 
+"Loading", "RerunCode", "Matrix", "SelectRandomNumber", "DaysUntil",
+"TimeToLoadUrl", "Timer", "Calendar", "SelfDestruct", "Stopwatch",
+"SelectRandomItem", "DeleteCommandHistory", "GenerateUsername", "CheckInternetSpeed", "Commands?",
+"ShowCommandHistory", "Exit", "Time", "GeneratePassword", "Clear",
+"Reset", "ChangeUsername", "CheckInternet", "CheckPasswordStrength", "UpdateCode",
+ 
     ]
     input_text = "\033[1;92m>>>\033[1;33m "
     stopwatch = False
@@ -101,40 +101,40 @@ def Main()->None:
     start_time = time.time()
     while running:
         try:
-            print("\033[?25h", end="");command = input("\033[1;90m[\033[0m YYYY/MM/DD HH:MM:SS XM \033[1;90m] "+input_text).strip();print("\033[90m\033[?25l", end="") # Command - ex. Commands? | Evaluate - ex. 1 + 1 | Print text - ex. "Hello, World!" | Comment in prompt - ex. Commands? # Hello, World!
-            if command and command.split("#")[0].strip() if "#" in command else command:
-                time_of_command = time.strftime("%Y/%m/%d %I:%M:%S %p");print("\033[A\033[K\033[1;90m[\033[0m {} \033[1;90m] {}{}\033[0;90m".format(time_of_command, input_text, command.replace("#", "\033[8m#")));command = command.split("#")[0].strip() if "#" in command else command;parts = shlex.split(command);main_command = parts[0]
+            print("\033[?25h", end="");command = input("\033[1;90m[\033[0m YYYY/MM/DD HH:MM:SS XM \033[1;90m] "+input_text).strip();print("\033[90m\033[?25l", end="") # Command - ex. Commands? | Evaluate - ex. 1 + 1 | Print text - ex. "Hello, World"
+            if command:
+                time_of_command = time.strftime("%Y/%m/%d %I:%M:%S %p");print(f"\033[A\033[K\033[1;90m[\033[0m {time_of_command} \033[1;90m] {input_text}{command}\033[0;90m");parts = shlex.split(command);main_command = parts[0]
                 try:print(simpleeval.simple_eval(command));print();continue
                 except:pass
                 if command not in ["ShowCommandHistory", "DeleteCommandHistory"]:
                     with shelve.open("Data") as db:temp_list = db["CommandHistory"];temp_list.append(f"\"{command}\" - {time_of_command}");db["CommandHistory"] = temp_list
             else:print("\033[A\033[K", end="");continue
-            if command == "Commands?": # {NA} - No argument. | {N} - Nothing. | (main_command_half1/main_command_half2)main_command_half - Commands are identical.
-                print("""»› Commands?
-»› (Show/Delete)CommandHistory
-»› Clear
-»› Reset
-»› SelfDestruct
-»› RerunCode
-»› UpdateCode
-»› Exit <{NA}/Imm>
-»› ChangeUsername <Username>
-»› Loading <True/False/Check>
-»› Time
-»› DaysUntil <Year-Month-Day> <{NA}/Year-Month-Day>
-»› Calendar <{NA}/Year>
-»› Timer <Hour-Minute-Second/Minute-Second>
-»› Stopwatch <Start/Stop/Reset>
-»› SelectRandomItem <ListOfItems>
-»› SelectRandomNumber <Number> <Number>
-»› GeneratePassword <Length> <NumberOfPasswords> <{NA}/Letters> <{NA}/Numbers> <{NA}/SpecialCharacters>
-»› CheckPasswordStrength <Password>
-»› GenerateUsername <NumberOfUsernames>
-»› Matrix
-»› TimeToLoadUrl <Url>
-»› CheckInternet({N}/Speed)
+            if command == "Commands?":print("""- Commands?
+- ShowCommandHistory
+- DeleteCommandHistory
+- Clear
+- Reset
+- SelfDestruct
+- RerunCode
+- UpdateCode
+- Exit NA｜(Imm)
+- ChangeUsername <<Username>>
+- Loading (True)｜(False)｜(Check)
+- Time
+- DaysUntil <<Year-Month-Day>> NA｜<<Year-Month-Day>>
+- Calendar NA｜<<Year>>
+- Timer <<Hour-Minute-Second>>｜<<Minute-Second>>
+- Stopwatch (Start)｜(Stop)｜(Reset)
+- SelectRandomItem <<ListOfItems>>
+- SelectRandomNumber <<Number>> <<Number>>
+- GeneratePassword <<Length>> <<NumberOfPasswords>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
+- CheckPasswordStrength <<Password>>
+- GenerateUsername <<NumberOfUsernames>>
+- Matrix
+- TimeToLoadUrl <<Url>>
+- CheckInternet
+- CheckInternetSpeed
 """)
-            
             elif command == "UpdateCode":
                 print()
                 while True:
@@ -152,15 +152,15 @@ def Main()->None:
                                         if dest.exists():shutil.rmtree(dest)
                                         shutil.copytree(item, dest)
                                     else:shutil.copy2(item, dest)
-                        os.remove(zip_path);print("Update completed successfully.\n");exit()
+                        os.remove(zip_path);print("\033[A\033[KUpdate completed successfully.\n");exit()
                     elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
                     else:continue
             elif main_command == "DaysUntil":
                 if len(parts) >= 2:
                     try:
-                        target_date = datetime.datetime.strptime(parts[1], "%Y-%m-%d").date()
+                        target_date = datetime.datetime.strptime(parts[1], "%Y/%m/%d").date()
                         if len(parts) >= 3:
-                            target_date2 = datetime.datetime.strptime(' '.join(parts[2:]), "%Y-%m-%d").date()
+                            target_date2 = datetime.datetime.strptime(' '.join(parts[2:]), "%Y/%m/%d").date()
                             if target_date > target_date2:print("Invalid argument. Target date cannot be in the past.\n");continue
                             else:days_left = (target_date2 - target_date).days
                             if days_left == 0:print(f"The target date is today if the current date is {target_date}.\n")
@@ -172,7 +172,7 @@ def Main()->None:
                             if days_left == 0:print("The target date is today.\n")
                             else:print(f"There are {days_left} day{'' if days_left == 1 else 's'} left until {target_date}.\n")
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format years-months-days.\n")
-                else:print("Invalid argument. Please provide YYY-MM-DD format.\n")
+                else:print("Invalid argument. Please enter Year-Month-Day and NA or Year-Month-Day.\n")
             elif command == "Matrix":
                 while True:
                     try:
@@ -188,8 +188,7 @@ def Main()->None:
             elif main_command == "CheckPasswordStrength":
                 if len(parts) > 1:
                     if not ' '.join(parts[1:]).strip():print("Invalid arument. Please enter Password.\n");continue
-                    result = zxcvbn.zxcvbn(' '.join(parts[1:]).replace(" ", ""));result2 = password_strength.PasswordStats(' '.join(parts[1:]));repeated = len([m.group(0) for m in re.finditer(r'(.)\1+', ' '.join(parts[1:]))])
-                    print(f"""Password:                             \"{' '.join(parts[1:])}\"\nLength:                               {len(' '.join(parts[1:]))}\nEntropy:                              {result2.entropy_bits:.1f} bit{'' if result2.entropy_bits in [0, 1] else 's'}\nComposition:\nLetters:                              {len(re.findall(r'[A-Z]', ' '.join(parts[1:]))) + len(re.findall(r'[a-z]', ' '.join(parts[1:])))}\nUppercase:                            {len(re.findall(r'[A-Z]', ' '.join(parts[1:])))}\nLowercase:                            {len(re.findall(r'[a-z]', ' '.join(parts[1:])))}\nNumbers:                              {len(re.findall(r'[0-9]', ' '.join(parts[1:])))}\nSpecialCharacters:                    {len(' '.join(parts[1:])) - (len(re.findall(r'[A-Z]', ' '.join(parts[1:]))) + len(re.findall(r'[a-z]', ' '.join(parts[1:]))) + len(re.findall(r'[0-9]', ' '.join(parts[1:]))))}\nRepeated:                             {repeated}\nScore:                                {result['score']}/4\nStrength:                             {result2.strength()}\nConsidered random:                    {result['score'] >= 3}\nEstimated crack time:                 {result['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nWarning:                              {result['feedback']['warning'] or 'No warning'}\nSuggestions:                          {' '.join(result['feedback']['suggestions']) or 'No suggestions'}\n""")
+                    result = zxcvbn.zxcvbn(' '.join(parts[1:]).replace(" ", ""));result2 = password_strength.PasswordStats(' '.join(parts[1:]));repeated = len([m.group(0) for m in re.finditer(r'(.)\1+', ' '.join(parts[1:]))]);print(f"""Password:                             \"{' '.join(parts[1:])}\"\nLength:                               {len(' '.join(parts[1:]))}\nEntropy:                              {result2.entropy_bits:.1f} bit{'' if result2.entropy_bits in [0, 1] else 's'}\nComposition:\nLetters:                              {len(re.findall(r'[A-Z]', ' '.join(parts[1:]))) + len(re.findall(r'[a-z]', ' '.join(parts[1:])))}\nUppercase:                            {len(re.findall(r'[A-Z]', ' '.join(parts[1:])))}\nLowercase:                            {len(re.findall(r'[a-z]', ' '.join(parts[1:])))}\nNumbers:                              {len(re.findall(r'[0-9]', ' '.join(parts[1:])))}\nSpecialCharacters:                    {len(' '.join(parts[1:])) - (len(re.findall(r'[A-Z]', ' '.join(parts[1:]))) + len(re.findall(r'[a-z]', ' '.join(parts[1:]))) + len(re.findall(r'[0-9]', ' '.join(parts[1:]))))}\nRepeated:                             {repeated}\nScore:                                {result['score']}/4\nStrength:                             {result2.strength()}\nConsidered random:                    {result['score'] >= 3}\nEstimated crack time:                 {result['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nWarning:                              {result['feedback']['warning'] or 'No warning'}\nSuggestions:                          {' '.join(result['feedback']['suggestions']) or 'No suggestions'}\n""")
                 else:print("Invalid arument. Please enter Password.\n")
             elif main_command == "GeneratePassword":
                 if len(parts) >= 3:
@@ -216,7 +215,7 @@ def Main()->None:
                     def generate_password(length,num_of_passwords,characters):
                         with ThreadPoolExecutor() as executor:passwords = [future.result() for future in [executor.submit(password,length,characters) for _ in range(num_of_passwords)]];print(f"Generated password{'' if num_of_passwords == 1 else 's'}:");print("\n".join([f"{i}. {password}" for i, password in enumerate(passwords, 1)])+"\n")
                     generate_password(length,num_of_passwords,characters)
-                else:print("Invalid argument. Please enter Length, NumberOfPasswords and Letters/Numbers/SpecialCharacters.\n");continue
+                else:print("Invalid argument. Please enter Length, NumberOfPasswords, NA or Letters, Numbers and NA or SpecialCharacters.\n")
             elif main_command == "TimeToLoadUrl":
                 if len(parts) > 1:
                     url = ' '.join(parts[1:])
@@ -242,7 +241,7 @@ def Main()->None:
                         else:print("Stopwatch is not running.\n")
                     elif ' '.join(parts[1:]) == "Reset":stopwatch = False;stopwatch_start_time = None;print("Stopwatch reset.\n")
                     else:print("Invalid argument. Please enter Start, Stop or Reset.\n")
-                else:print("Invalid argument. Please enter Start, Stop or Reset.\n")
+                else:print("Invalid argument. Please enter Start or Stop or Reset.\n")
             elif main_command == "GenerateUsername":
                 if len(parts) >= 2:
                     try:num_of_usernames = int(' '.join(parts[1:]))
@@ -257,26 +256,26 @@ def Main()->None:
                     except ValueError:print("Invalid argument. Year must be a number.\n")
                 else:print(calendar.calendar(datetime.date.today().year));print(f'Date: {time.strftime(f"%A, %B %d, %Y")}\n')
             elif command == "Clear":print("\033c", end="")
-            elif command == "Rerun":print("\033c", end="");os.system("python", __file__)
+            elif command == "RerunCode":print("\033c", end="");os.system(f"python {__file__}")
             elif main_command == "ChangeUsername":
                 if len(parts) > 1:
                     new_name = ' '.join(parts[1:]).lstrip()
                     if not new_name:print("Invalid argument. Username cannot be empty.\n");continue
                     if new_name == "default":shelve.open("Data")["Username"] = f"User {random.randint(1, 100)}"
                     else:shelve.open("Data")["Username"] = new_name
-                else:print("Invalid argument. Please enter a valid username.\n")
+                else:print("Invalid argument. Please enter Username.\n")
             elif main_command == "Loading":
                 if len(parts) > 1:
-                    loading = shelve.open("Data")["Loading"].strip()
+                    loading = shelve.open("Data")["Loading"]
                     if ' '.join(parts[1:]) == "True":
-                        if loading == "False":shelve.open("Data")["Loading"] = "True";loading = True;print("Loading successfully set to True.\n")
+                        if loading == False:shelve.open("Data")["Loading"] = True;loading = True;print("Loading successfully set to True.\n")
                         else:print("Loading already set to True.\n")
                     elif ' '.join(parts[1:]) == "False":
-                        if loading == "True":shelve.open("Data")["Loading"] = "False";loading = False;print("Loading successfully set to False.\n")
+                        if loading:shelve.open("Data")["Loading"] = False;loading = False;print("Loading successfully set to False.\n")
                         else:print("Loading already set to False.\n")
                     elif ' '.join(parts[1:]) == "Check":print("Loading:", get_loading());print()
                     else:print("Invalid argument. Please enter True, False or Check.\n")
-                else:print("Invalid argument. Please enter True, False or Check.\n")
+                else:print("Invalid argument. Please enter True or False or Check.\n")
             elif main_command == "Timer":
                 if len(parts) > 1:
                     try:
@@ -296,7 +295,7 @@ def Main()->None:
                             print();print("\033[A\033[KTimes up!\n")
                         except (KeyboardInterrupt, EOFError):print();print()
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format hours:minutes:seconds or minutes:seconds.\n")
-                else:print("Invalid argument. Please enter valid time in HH:MM:SS or MM:SS format.\n")
+                else:print("Invalid argument. Please enter Hour:Minute:Second or Minute:Second.\n")
             elif command == "Time":
                 while True:
                     try:print("\r"+time.strftime(f"Holiday: {holiday()} Date: %A, %B %d, %Y Time: %I:%M:%S %p"), end="", flush=True);time.sleep(.001)
@@ -309,7 +308,7 @@ def Main()->None:
                 else: shelve.open("Data")["CommandHistory"] = [];print("Recent commands deleted.\n")
             elif main_command == "SelectRandomItem":
                 if len(parts) > 1:items = parts[1:];print("Invalid argument. Please provide at least 2 items separated by spaces.\n") if len(items) < 2 else print(f"Selected item: {random.choice(items)}\n")
-                else:print("Invalid argument. Please enter a list of items separated by spaces.\n")
+                else:print("Invalid argument. Please enter ListOfItems.\n")
             elif main_command == "SelectRandomNumber":
                 if len(parts) == 3:
                     try:first_num = int(parts[1]);second_num = int(parts[2])
@@ -317,7 +316,7 @@ def Main()->None:
                     if first_num < 1 or first_num < 0:print("Invalid argument. Please enter a non negative number and not zero.\n");continue
                     if first_num > second_num:print("Invalid argument. Please enter a number greater than the first number.\n");continue
                     print(f"Selected number: {random.randint(first_num, second_num)}\n")
-                else:print("Invalid argument. Please enter 2 numbers.\n")
+                else:print("Invalid argument. Please enter Number and Number.\n")
             elif command == "SelfDestruct": # As you can see this command is dangerous but this was my friend's request. Uncomment the exec() code to make this command work.
                 print()
                 while True:
@@ -332,13 +331,13 @@ def Main()->None:
                 print()
                 while True:
                     confirm = getch("\033[A\033[KConfirm (Y/N): ").lower()
-                    if confirm == "y":print("\033[A\033[K", end="");os.remove("Data");print("\033c", end="");os.system("python", __file__)
+                    if confirm == "y":print("\033[A\033[K", end="");os.remove("Data");print("\033c", end="");os.system(f"python {__file__}")
                     elif confirm == "n":print("\033[A\033[KReset cancelled.\n");break
                     else:continue
             elif main_command == "Exit":
                 if len(parts) > 1:
                     if ' '.join(parts[1:]) == "Imm":end_time = time.time();print(f"Exited, Time spent: [{int((end_time - start_time) // 3600):02d}:{int((end_time - start_time) % 3600 // 60):02d}:{int((end_time - start_time) % 60):02d}.{int(((end_time - start_time) - int(end_time - start_time)) * 1000):02d}]\033[0m\n");exit()
-                    else:print("Invalid argument. Please enter Imm or (No Arg).\n")
+                    else:print("Invalid argument. Please enter NA or Imm.\n")
                 else:
                     print()
                     while True:
@@ -348,10 +347,7 @@ def Main()->None:
                         else:continue
             else:
                 valid_commands_lower = [cmd.lower() for cmd in valid_commands];suggestions = difflib.get_close_matches((command if len(parts) == 1 else main_command).lower(), valid_commands_lower, n=3, cutoff=0.6)
-                if suggestions:
-                    suggestions_original_case = [valid_commands[valid_commands_lower.index(s)] for s in suggestions]
-                    if len(suggestions_original_case) == 1:print(f'Did you mean: "{suggestions_original_case[0]}".\n')
-                    else:print("Did you mean one of these: "+", ".join(f"\"{s}\"" for s in suggestions_original_case)+".\n")
+                if suggestions:suggestions_original_case = [valid_commands[valid_commands_lower.index(s)] for s in suggestions];print((f'Did you mean: "{suggestions_original_case[0]}".\n') if len(suggestions_original_case) == 1 else ("Did you mean one of these: "+", ".join(f"\"{s}\"" for s in suggestions_original_case)+".\n"))
                 else:print(f"Unknown command: \"{command if len(parts) == 1 else main_command}\".\n")
         except (KeyboardInterrupt, EOFError):print("\n\033[A\033[K", end="")
         except Exception as error:print(f"Error: {repr(error)}.\n")
