@@ -1,7 +1,5 @@
 # PyCommandExecutor
 
-**PyCommandExecutor** is a multifunctional command-line tool that combines a wide range of utilities into a single terminal interface. With built-in commands for calculations, password generation, internet checks, timers, and more.
-
 ## Commands
 
 ```plain
