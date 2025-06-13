@@ -38,10 +38,15 @@
 
 ## Installation
 
-```plain
+```bash
 pkg update && pkg upgrade
 pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
+```
+
+## Run
+
+```bash
 cd PyCommandExecutor
 python Main.py
 ```
