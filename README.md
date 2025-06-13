@@ -19,11 +19,11 @@
 - Calendar NA｜<<Year>>
 - Timer <<Hour:Minute:Second>>｜<<Minute:Second>>
 - Stopwatch (Start)｜(Stop)｜(Reset)
-- SelectRandomItem <<ListOfItems>>
+- SelectRandomItem <<Items>>
 - SelectRandomNumber <<Number>> <<Number>>
-- GeneratePassword <<Length>> <<NumberOfPasswords>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
+- GeneratePassword <<Length>> <<Quantity>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
 - CheckPasswordStrength <<Password>>
-- GenerateUsername <<NumberOfUsernames>>
+- GenerateUsername <<Quantity>>
 - Matrix
 - TimeToLoadUrl <<Url>>
 - CheckInternet
