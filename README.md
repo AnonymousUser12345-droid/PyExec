@@ -7,21 +7,19 @@
 - ShowCommandHistory
 - DeleteCommandHistory
 - Clear
-- Reset
-- SelfDestruct
+- DeleteData
 - RerunCode
 - UpdateCode
-- Exit NA｜(Imm)
+- Exit NA or (Imm)
 - ChangeUsername <<Username>>
-- Loading (True)｜(False)｜(Check)
 - Time
-- DaysUntil <<Year/Month/Day>> NA｜<<Year/Month/Day>>
-- Calendar NA｜<<Year>>
-- Timer <<Hour:Minute:Second>>｜<<Minute:Second>>
-- Stopwatch (Start)｜(Stop)｜(Reset)
+- DaysUntil <<Year/Month/Day>> NA or <<Year/Month/Day>>
+- Calendar NA or <<Year>>
+- Timer <<Hour:Minute:Second>> or <<Minute:Second>>
+- Stopwatch (Start) or (Stop) or (Reset)
 - SelectRandomItem <<Items>>
 - SelectRandomNumber <<Number>> <<Number>>
-- GeneratePassword <<Length>> <<Quantity>> NA｜(Letters) NA｜(Numbers) NA｜(SpecialCharacters)
+- GeneratePassword <<Length>> <<Quantity>> NA or (Letters) NA or (Numbers) NA or (SpecialCharacters)
 - CheckPasswordStrength <<Password>>
 - GenerateUsername <<Quantity>>
 - Matrix
@@ -47,7 +45,6 @@ python Main.py
 
 ## Dependencies
 
-- [holidays](https://pypi.org/project/holidays/)
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
