@@ -1,4 +1,3 @@
-holidays
 password-strength
 requests
 simpleeval
