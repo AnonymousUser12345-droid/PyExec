@@ -29,11 +29,22 @@
 
 ## Appearance
 
-```markdown
-$\color{green}{\textsf{Green}}$
-```
+```plain
+__   ___         ___                                    _  ___                      _               __
+\ \ | _ \ _  _  / __| ___  _ __   _ __   __ _  _ _   __| || __|__ __ ___  __  _  _ | |_  ___  _ _  / /
+ > >|  _/| || || (__ / _ \| '  \ | '  \ / _` || ' \ / _` || _| \ \ // -_)/ _|| || ||  _|/ _ \| '_|< <
+/_/ |_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\___|\__| \_,_| \__|\___/|_|   \_\
+          |__/
 
-$$\color{green}{Green}$$
+Welcome to PyCommandExecutor, User 100!
+
+Enter "Commands?" for commands, "Exit Imm" to exit.
+Username: "User 100"
+Date: 2025/06/27
+Time: 12:02:36 AM
+
+[ YYYY/MM/DD HH:MM:SS XM ] $ █
+```
 
 ## Installation
 
