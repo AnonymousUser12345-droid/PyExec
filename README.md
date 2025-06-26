@@ -30,7 +30,7 @@
 ## Appearance
 
 ```markdown
-<code style="color : green">text</code>
+$${\color{green}Green}$$
 ```
 
 ## Installation
