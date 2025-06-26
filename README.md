@@ -33,7 +33,7 @@
 $\color{green}{\textsf{Green}}$
 ```
 
-$\color{green}{\textsf{Green}}$
+$$\color{green}{Green}$$
 
 ## Installation
 
