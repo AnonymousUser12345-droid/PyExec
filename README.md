@@ -36,10 +36,10 @@ __   ___         ___                                    _  ___                  
 /_/ |_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\___|\__| \_,_| \__|\___/|_|   \_\
           |__/
 
-Welcome to PyCommandExecutor, User 100!
+Welcome to PyCommandExecutor, User 89!
 
 Enter "Commands?" for commands, "Exit Imm" to exit.
-Username: "User 100"
+Username: "User 89"
 Date: 2025/06/27
 Time: 12:02:36 AM
 
