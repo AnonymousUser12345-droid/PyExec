@@ -30,8 +30,10 @@
 ## Appearance
 
 ```markdown
-$${\color{green}Green}$$
+$\color{green}{\textsf{Green}}$
 ```
+
+$\color{green}{\textsf{Green}}$
 
 ## Installation
 
