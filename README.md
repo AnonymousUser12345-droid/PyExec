@@ -4,33 +4,39 @@
 
 ```plain
 - Commands?
-- ShowCommandHistory
-- DeleteCommandHistory
+- CommandHistory        [(List) or (Delete)]
 - Clear
 - DeleteData
 - RerunCode
 - UpdateCode
-- Exit NA or (Imm)
-- ChangeUsername <<Username>>
+- Exit                  [NA or (Imm)]
+- ChangeUsername        [<<Username>>]
 - Time
-- DaysUntil <<Year/Month/Day>> NA or <<Year/Month/Day>>
-- Calendar NA or <<Year>>
-- Timer <<Hour:Minute:Second>> or <<Minute:Second>>
-- Stopwatch (Start) or (Stop) or (Reset)
-- SelectRandomItem <<Items>>
-- SelectRandomNumber <<Number>> <<Number>>
-- GeneratePassword <<Length>> <<Quantity>> NA or (Letters) NA or (Numbers) NA or (SpecialCharacters)
-- CheckPasswordStrength <<Password>>
-- GenerateUsername <<Quantity>>
+- DaysUntil             <<Year/Month/Day>> & NA or <<Year/Month/Day>>
+- Calendar              [NA or <<Year>>]
+- Timer                 [<<Time>>]
+- Stopwatch             [(Start) or (Stop) or (Reset)]
+- SelectRandomItem      [<<Items>>]
+- SelectRandomNumber    [<<Number>>] & [<<Number>>]
+- GeneratePassword      [<<Length>>] & [<<Quantity>>] & [NA or (Letters)] & [NA or (Numbers)] & [NA or (SpecialCharacters)]
+- CheckPasswordStrength [<<Password>>]
+- GenerateUsername      [<<Quantity>>]
 - Matrix
-- TimeToLoadUrl <<Url>>
+- TimeToLoadUrl         [<<Url>>]
 - CheckInternet
 - CheckInternetSpeed
 ```
 
-## Screenshot
+## Appearance
 
-![](Screenshot_20250611-133112~3.jpg)
+```markdown
+This text is <span style="color:red;">red</span>.
+
+This text is <span style="color:green;">green</span>.
+
+This text is <span style="color:blue;">blue</span>.
+
+```
 
 ## Installation
 
