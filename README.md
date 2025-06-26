@@ -30,12 +30,7 @@
 ## Appearance
 
 ```markdown
-This text is <span style="color:red;">red</span>.
-
-This text is <span style="color:green;">green</span>.
-
-This text is <span style="color:blue;">blue</span>.
-
+<code style="color : green">text</code>
 ```
 
 ## Installation
