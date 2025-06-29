@@ -3,28 +3,28 @@
 ## Commands
 
 ```plain
-- Commands?
+- Commands?             
 - CommandHistory        [(List) or (Delete)]
-- Clear
-- DeleteData
-- RerunCode
-- UpdateCode
-- Exit                  [NA or (Imm)]
+- Clear                 
+- DeleteData            
+- RerunCode             
+- UpdateCode            
+- Exit                  [() or (Imm)]
 - ChangeUsername        [<<Username>>]
-- Time
-- DaysUntil             <<Year/Month/Day>> & NA or <<Year/Month/Day>>
-- Calendar              [NA or <<Year>>]
+- Time                  
+- DaysUntil             [<<Date>>] & [() or <<Date>>]
+- Calendar              [() or <<Year>>]
 - Timer                 [<<Time>>]
 - Stopwatch             [(Start) or (Stop) or (Reset)]
 - SelectRandomItem      [<<Items>>]
 - SelectRandomNumber    [<<Number>>] & [<<Number>>]
-- GeneratePassword      [<<Length>>] & [<<Quantity>>] & [NA or (Letters)] & [NA or (Numbers)] & [NA or (SpecialCharacters)]
+- GeneratePassword      [<<Length>>] & [<<Quantity>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)]
 - CheckPasswordStrength [<<Password>>]
 - GenerateUsername      [<<Quantity>>]
-- Matrix
+- Matrix                
 - TimeToLoadUrl         [<<Url>>]
-- CheckInternet
-- CheckInternetSpeed
+- CheckInternet         
+- CheckInternetSpeed    
 ```
 
 ## Appearance
@@ -53,7 +53,6 @@ pkg update && pkg upgrade
 pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
-pip install -r requirements.txt
 python Main.py
 ```
 
