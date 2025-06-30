@@ -3,6 +3,7 @@
 ## Commands
 
 ```plain
+Command                 Argument
 - Commands?             
 - CommandHistory        [(List) or (Delete)]
 - Clear                 
@@ -11,16 +12,16 @@
 - UpdateCode            
 - Exit                  [() or (Imm)]
 - ChangeUsername        [<<Username>>]
-- Time                  
+- Time                  [()]
 - DaysUntil             [<<Date>>] & [() or <<Date>>]
 - Calendar              [() or <<Year>>]
 - Timer                 [<<Time>>]
 - Stopwatch             [(Start) or (Stop) or (Reset)]
-- SelectRandomItem      [<<Items>>]
+- SelectRandomItem      [<<List>>]
 - SelectRandomNumber    [<<Number>>] & [<<Number>>]
-- GeneratePassword      [<<Length>>] & [<<Quantity>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)]
+- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)]
 - CheckPasswordStrength [<<Password>>]
-- GenerateUsername      [<<Quantity>>]
+- GenerateUsername      
 - Matrix                
 - TimeToLoadUrl         [<<Url>>]
 - CheckInternet         
