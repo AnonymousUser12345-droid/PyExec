@@ -19,7 +19,7 @@ Command                 Argument
 - Stopwatch             [(Start) or (Stop) or (Reset)]
 - SelectRandomItem      [<<List>>]
 - SelectRandomNumber    [<<Number>>] & [<<Number>>]
-- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)]
+- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)] & [() or (Spaces)]
 - CheckPasswordStrength [<<Password>>]
 - GenerateUsername      
 - Matrix                
