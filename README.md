@@ -39,8 +39,8 @@ __   ___         ___                                    _  ___                  
 
 Welcome to PyCommandExecutor, User 89!
 
-Enter "Commands?" for commands, "Exit Imm" to exit.
-Username: "User 89"
+Enter "𝙲̲𝚘̲𝚖̲𝚖̲𝚊̲𝚗̲𝚍̲𝚜̲?̲" for commands, "𝙴̲𝚡̲𝚒̲𝚝̲ 𝙸̲𝚖̲𝚖̲" to exit.
+Username: User 89
 Date: 2025/06/27
 Time: 12:02:36 AM
 
