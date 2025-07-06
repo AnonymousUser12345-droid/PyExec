@@ -51,7 +51,7 @@ Time: 12:02:36 AM
 
 ```bash
 pkg update && pkg upgrade
-pkg install git python
+pkg install git python termux-api
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 cd PyCommandExecutor
 python Main.py
@@ -59,8 +59,14 @@ python Main.py
 
 ## Dependencies
 
+### You Can Install Later
+
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
+
+### You Need To Install Now
+
+- [Termux:Api](https://f-droid.org/packages/com.termux.api)
