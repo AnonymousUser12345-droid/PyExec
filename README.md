@@ -2,7 +2,7 @@
 
 ## 🧑‍💻 Commands
 
->```plain
+```plain
 Command                 Argument
 - Commands?             
 - CommandHistory        [(List) or (Delete)]
@@ -62,7 +62,7 @@ cd PyCommandExecutor
 python Main.py
 ```
 
-## 📦 Dependencies
+## 📦 Dependencies & Installation
 
 - [password-strength](https://pypi.org/project/password-strength/)
 ```bash
