@@ -1,6 +1,6 @@
 # PyCommandExecutor
 
-## Commands
+## 🧑‍💻 Commands
 
 ```plain
 Command                 Argument
@@ -28,7 +28,7 @@ Command                 Argument
 - CheckInternetSpeed    
 ```
 
-## Appearance
+## 👤 Appearance
 
 ```plain
 __   ___         ___                                    _  ___                      _               __
@@ -47,7 +47,7 @@ Time: 12:02:36 AM
 [ YYYY/MM/DD HH:MM:SS XM ] $ █
 ```
 
-## Installation
+## 🛠️ Installation
 
 ```bash
 pkg update && pkg upgrade
@@ -57,39 +57,10 @@ cd PyCommandExecutor
 python Main.py
 ```
 
-## Dependencies
-
-### You Can Install Later
+## 📦 Dependencies
 
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
-
-### You Need To Install Now
-
-- [Termux:Api](https://f-droid.org/packages/com.termux.api)
-
-# Termux Security Toolkit
-
-A powerful Python-based security assessment and utility toolkit for Termux on Android.
-
-## 🔐 Key Features
-
-- Password strength analysis
-- Network speed testing
-- Secure API interactions
-- System information gathering
-- Cryptographic operations
-
-## 📦 Dependencies
-
-### Core Requirements
-| Package | Installation | Purpose |
-|---------|--------------|---------|
-| **Termux:API** | [F-Droid](https://f-droid.org/packages/com.termux.api) | Android system integration |
-
-### Python Packages (Install as needed)
-```bash
-pip install password-strength requests simpleeval speedtest-cli zxcvbn
