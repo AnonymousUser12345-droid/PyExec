@@ -2,8 +2,7 @@
 
 ## 🧑‍💻 Commands
 
->```plain
-Command                 Argument
+>```plainCommand                 Argument
 - Commands?             
 - CommandHistory        [(List) or (Delete)]
 - Clear                 
