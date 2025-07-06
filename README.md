@@ -2,7 +2,7 @@
 
 ## 🧑‍💻 Commands
 
-```plain
+>```plain
 Command                 Argument
 - Commands?             
 - CommandHistory        [(List) or (Delete)]
@@ -66,18 +66,25 @@ python Main.py
 
 - [password-strength](https://pypi.org/project/password-strength/)
 ```bash
-pip install password_strength
+pip install password-strength
 ```
 
 - [requests](https://pypi.org/project/requests/)
-
+```bash
+pip install requests
+```
 
 - [simpleeval](https://pypi.org/project/simpleeval/)
-
+```bash
+pip install simpleeval
+```
 
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
-
+```bash
+pip install speedtest-cli
+```
 
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
-
-
+```bash
+pip install zxcvbn
+```
