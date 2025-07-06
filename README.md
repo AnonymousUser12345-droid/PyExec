@@ -70,3 +70,26 @@ python Main.py
 ### You Need To Install Now
 
 - [Termux:Api](https://f-droid.org/packages/com.termux.api)
+
+# Termux Security Toolkit
+
+A powerful Python-based security assessment and utility toolkit for Termux on Android.
+
+## 🔐 Key Features
+
+- Password strength analysis
+- Network speed testing
+- Secure API interactions
+- System information gathering
+- Cryptographic operations
+
+## 📦 Dependencies
+
+### Core Requirements
+| Package | Installation | Purpose |
+|---------|--------------|---------|
+| **Termux:API** | [F-Droid](https://f-droid.org/packages/com.termux.api) | Android system integration |
+
+### Python Packages (Install as needed)
+```bash
+pip install password-strength requests simpleeval speedtest-cli zxcvbn
