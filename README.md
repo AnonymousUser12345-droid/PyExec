@@ -39,12 +39,12 @@ __   ___         ___                                    _  ___                  
 
 Welcome to PyCommandExecutor, User 89!
 
-Enter "𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀?" for commands, "𝗘𝘅𝗶𝘁 𝗜𝗺𝗺" to exit.
+Enter "Commands?" for commands, "Exit Imm" to exit.
 Username: User 89
 Date: 2025/06/27
 Time: 12:02:36 AM
 
-[ YYYY/MM/DD HH:MM:SS XM ] $ █
+[ YYYY/MM/DD HH:MM:SS XM ] $
 ```
 
 ## 🛠️ Installation
