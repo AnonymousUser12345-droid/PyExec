@@ -1,4 +1,3 @@
-humanize
 password-strength
 requests
 simpleeval
