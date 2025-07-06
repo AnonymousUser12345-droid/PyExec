@@ -51,7 +51,7 @@ Time: 12:02:36 AM
 
 ```bash
 pkg update && pkg upgrade
-pkg install git python termux-api
+pkg install git python play-audio
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 ```
 
@@ -65,7 +65,19 @@ python Main.py
 ## 📦 Dependencies
 
 - [password-strength](https://pypi.org/project/password-strength/)
+```bash
+pip install password_strength
+```
+
 - [requests](https://pypi.org/project/requests/)
+
+
 - [simpleeval](https://pypi.org/project/simpleeval/)
+
+
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
+
+
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
+
+
