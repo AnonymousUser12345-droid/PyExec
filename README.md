@@ -28,7 +28,7 @@ Command                 Argument
 - CheckInternetSpeed    
 ```
 
-## 👤 Appearance
+## 👤 Appearance (in plain text)
 
 ```plain
 __   ___         ___                                    _  ___                      _               __
@@ -55,14 +55,14 @@ pkg install git python play-audio
 git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
 ```
 
-## 🛠️ Run
+## 🔧 Run
 
 ```bash
 cd PyCommandExecutor
 python Main.py
 ```
 
-## 📦 Dependencies & Installation
+## 📦 Dependencies & 🛠️ Installation
 
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
