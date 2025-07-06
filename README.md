@@ -59,7 +59,6 @@ python Main.py
 
 ## Dependencies
 
-- [humanize](https://pypi.org/project/humanize/)
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
