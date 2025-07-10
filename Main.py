@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import atexit
 import calendar
 import datetime
+import dbm
 import difflib
 import importlib
 import itertools
@@ -13,6 +14,7 @@ import pathlib
 import random
 import readline
 import re
+import secrets
 import shelve
 import shlex
 import shutil
@@ -32,13 +34,13 @@ REQUIRED_MODULES={
 "requests": "requests",
 "speedtest": "speedtest-cli",
 "password_strength": "password-strength",
-"humanize": "humanize",
+
 }
 
-def module_available(module_name):
+def module_available(module_name)->True|False:
     return importlib.util.find_spec(module_name) is not None
 
-def install_package(package_name):
+def install_package(package_name)->True|False:
     try:subprocess.check_call([sys.executable,"-m","pip","install",package_name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);return True
     except subprocess.CalledProcessError:return False
 
@@ -61,7 +63,6 @@ try:
     import simpleeval
     import speedtest
     import zxcvbn
-    import humanize
 except ImportError as e:
     print(f"Critical import error: {str(e)}");sys.exit(1)
 
@@ -71,10 +72,17 @@ data={
 "Username": f"User {random.randint(1,100)}",
 "CommandHistory": [],
 }
-with shelve.open("Data") as db:
-    for key,value in data.items():
-        if key in db:pass
-        else:db[key]=value
+try:
+    with shelve.open("Data") as db:
+        for key,value in data.items():
+            if key in db:pass
+            else:db[key]=value
+except dbm.gnu.error:
+    print("Data is corrupted recreating new file Data.\n");os.remove("Data")
+    with shelve.open("Data") as db:
+        for key,value in data.items():
+            if key in db:pass
+            else:db[key]=value
 
 #####---------- Get Data ----------#####
 
@@ -99,7 +107,13 @@ def getch(prompt:str="")->str:
     print();print("\033[?25l",end="");return ch
 
 def Main()->None:
-    print(f"""\033c\033[?25l\033[92;1m__   ___         ___                                    _  ___                      _               __\n\ \ | _ \ _  _  / __| ___  _ __   _ __   __ _  _ _   __| || __|__ __ ___  __  _  _ | |_  ___  _ _  / /\n > >|  _/| || || (__ / _ \| '  \ | '  \ / _` || ' \ / _` || _| \ \ // -_)/ _|| || ||  _|/ _ \| '_|< <\n/_/ |_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\\___|\__| \_,_| \__|\___/|_|   \_\\\n          |__/\033[m\n\nWelcome to PyCommandExecutor, {get_username()}!\n\nEnter "Commands?" for commands, "Exit Imm" to exit.\nUsername: "{get_username()}"\n{time.strftime('Date: %Y/%m/%d')}\n{time.strftime('Time: %I:%M:%S %p')}\n""")
+    print(f"""\033c\033[?25l\033[92;1m\
+ ___         ___                                    _  ___                      _             \n\
+| _ \ _  _  / __| ___  _ __   _ __   __ _  _ _   __| || __|__ __ ___  __  _  _ | |_  ___  _ _ \n\
+|  _/| || || (__ / _ \| '  \ | '  \ / _` || ' \ / _` || _| \ \ // -_)/ _|| || ||  _|/ _ \| '_|\n\
+|_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\\___|\__| \_,_| \__|\___/|_|  \n\
+      |__/\
+\033[m\n\nWelcome to PyCommandExecutor, {get_username()}!\n\nEnter "\033[1;4mCommands?\033[m" for commands and "\033[1;4mExit Imm\033[m" to exit.\nUsername: {get_username()}\n{time.strftime("Date: %Y/%m/%d")}\n{time.strftime("Time: %I:%M:%S %p")}\n""")
     valid_commands=[
 "RerunCode",
 "Matrix",
@@ -129,7 +143,7 @@ def Main()->None:
     stopwatch=False
     running=True
     for i in range(1,26+1):readline.parse_and_bind(f"\"\\x{i}\": self-insert") # Disables most of the ctrl shortcuts.
-    for command in [k for k,g in itertools.groupby([s.strip()[:-23] for s in get_command_history()])]:readline.add_history(command) # Add commands from the history to the prompt's history.
+    for command in [k for k,g in itertools.groupby([s.strip()[:-23] for s in get_command_history()])]:readline.add_history(command) # Add commands from the data file to the prompt's history.
     start_time=time.time()
     while running:
         try:
@@ -157,7 +171,7 @@ def Main()->None:
 - Stopwatch             [(Start) or (Stop) or (Reset)]
 - SelectRandomItem      [<<List>>]
 - SelectRandomNumber    [<<Number>>] & [<<Number>>]
-- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)]
+- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)] & [() or (Spaces)]
 - CheckPasswordStrength [<<Password>>]
 - GenerateUsername      [()]
 - Matrix                [()]
@@ -207,35 +221,28 @@ def Main()->None:
             elif command == "Matrix":
                 while True:
                     try:
-                        if random.random() < .09:print(end='\n',flush=True)
-                        if random.random() < .005625:print(end='\n\n',flush=True)
-                        if random.random() < .0003515625:print(end='\n\n\n',flush=True)
-                        if random.random() < .00002197265625:print(end='\n\n\n\n',flush=True)
-                        if random.random() < .000001373291015625:print(end='\n\n\n\n\n',flush=True)
+                        for i in range(1, 6):
+                            if random.random() < 0.09 ** i:print(end="\n" * i,flush=True)
                         random_gibberish_code=list("".join(random.choice(string.ascii_letters+string.digits+string.punctuation+"     ")) for _ in range(random.randint(random.randint(28,60),random.randint(84,90))))
                         for _ in range(1,random.randint(1,10)+1):pos=random.randint(0,len(random_gibberish_code));random_gibberish_code[pos:pos]=list(random.choice([random.choice((''.join(char.upper() if random.random() < .5 else char.lower() for char in keyword),keyword.upper(),keyword.lower(),keyword)) for keyword in keyword.kwlist+["then","fi","do","done","esac","function","select","read","echo","test"]]))
                         print("\033[m"+random.choice(["\033[32m","\033[92m","\033[1;32m","\033[2;32m","\033[1;92m","\033[2;92m"])+"".join(random_gibberish_code),flush=True);time.sleep(0.01)
                     except (KeyboardInterrupt,EOFError):print();print();break
             elif main_command == "CheckPasswordStrength":
-                if len(parts) > 1:
-                    if not ' '.join(parts[1:]).strip():print("Invalid argument. Please enter [<<Password>>].\n");continue
-                    result=zxcvbn.zxcvbn(' '.join(parts[1:]).replace(" ",""));result2=password_strength.PasswordStats(' '.join(parts[1:]));repeated=len([m.group(0) for m in re.finditer(r'(.)\1+',' '.join(parts[1:]))]);print(f"""Password:                             {' '.join(parts[1:])}\nLength:                               {len(' '.join(parts[1:]))}\nEntropy:                              {result2.entropy_bits:.1f} bit{'' if result2.entropy_bits in [0,1] else 's'}\nComposition:\nLetters:                              {len(re.findall(r'[A-Z]',' '.join(parts[1:]))) + len(re.findall(r'[a-z]',' '.join(parts[1:])))}\nUppercase:                            {len(re.findall(r'[A-Z]',' '.join(parts[1:])))}\nLowercase:                            {len(re.findall(r'[a-z]',' '.join(parts[1:])))}\nNumbers:                              {len(re.findall(r'[0-9]',' '.join(parts[1:])))}\nSpecialCharacters:                    {len(' '.join(parts[1:])) - (len(re.findall(r'[A-Z]',' '.join(parts[1:]))) + len(re.findall(r'[a-z]',' '.join(parts[1:]))) + len(re.findall(r'[0-9]',' '.join(parts[1:]))))}\nRepeated:                             {repeated}\nScore:                                {result['score']}/4\nStrength:                             {result2.strength()}\nConsidered random:                    {result['score'] >= 3}\nEstimated crack time:                 {humanize.naturaldelta((result['crack_times_seconds']['offline_slow_hashing_1e4_per_second']+result['crack_times_seconds']['offline_slow_hashing_1e4_per_second']+result['crack_times_seconds']['online_no_throttling_10_per_second']+result['crack_times_seconds']['online_throttling_100_per_hour'])/4)}\nWarning:                              {result['feedback']['warning'] or 'No warning'}\nSuggestions:                          {' '.join(result['feedback']['suggestions']) or 'No suggestions'}\n""")
+                if len(parts) > 1:result,result2,repeated=zxcvbn.zxcvbn(' '.join(parts[1:])),password_strength.PasswordStats(' '.join(parts[1:])),len([m.group(0) for m in re.finditer(r'(.)\1+',' '.join(parts[1:]))]);print(f"""Password:                             {result['password']}\nLength:                               {len(' '.join(parts[1:]))}\nEntropy:                              {result2.entropy_bits:.1f}\nLetters:                              {len(re.findall(r'[A-Z]',' '.join(parts[1:]))) + len(re.findall(r'[a-z]',' '.join(parts[1:])))}\nUppercase:                            {len(re.findall(r'[A-Z]',' '.join(parts[1:])))}\nLowercase:                            {len(re.findall(r'[a-z]',' '.join(parts[1:])))}\nNumbers:                              {len(re.findall(r'[0-9]',' '.join(parts[1:])))}\nSpecialCharacters:                    {len(' '.join(parts[1:])) - (len(re.findall(r'[A-Z]',' '.join(parts[1:]))) + len(re.findall(r'[a-z]',' '.join(parts[1:]))) + len(re.findall(r'[0-9]',' '.join(parts[1:]))))}\nRepeated:                             {repeated}\nScore:                                {result['score']}/4\nStrength:                             {result2.strength()}\nConsidered random:                    {result['score'] >= 3 and result2.entropy_bits >= .66}\nGuesses:                              {result['guesses']}\nCrack time:\nOffline slow hashing 1e4 per second:  {result['crack_times_display']['offline_slow_hashing_1e4_per_second'].capitalize()}\nOffline fast hashing 1e10 per second: {result['crack_times_display']['offline_fast_hashing_1e10_per_second'].capitalize()}\nOnline no throttling 10 per second:   {result['crack_times_display']['online_no_throttling_10_per_second'].capitalize()}\nOnline throttling 100 per hour:       {result['crack_times_display']['online_throttling_100_per_hour'].capitalize()}\nWarning:                              {result['feedback']['warning'] or 'No warning'}\nSuggestions:                          {' '.join(result['feedback']['suggestions']) or 'No suggestions'}\n""")
                 else:print("Invalid argument. Please enter [<<Password>>].\n")
             elif main_command == "GeneratePassword":
                 if len(parts) >= 3:
                     try:length=int(parts[1])
                     except ValueError:print("Invalid argument. Please enter a number for the length.\n");continue
                     if length < 1:print("Invalid argument. Password length must be at least 1 character.\n");continue
-                    if len(parts[3:]) != len(set(parts[3:])):print("Invalid argument. Each option can only be specified once.\n");continue
-                    if not set(parts[3:]).issubset({"Letters","Numbers","SpecialCharacters"}):print("Invalid argument. Options must be Letters, Numbers, or SpecialCharacters.\n");continue
-                    characters=(string.ascii_letters if "Letters" in set(parts[3:]) else "")+(string.digits if "Numbers" in set(parts[3:]) else "")+(string.punctuation if "SpecialCharacters" in set(parts[3:]) else "")
+                    if len(parts[2:]) != len(set(parts[2:])):print("Invalid argument. Each option can only be specified once.\n");continue
+                    if not set(parts[2:]).issubset({"Letters","Numbers","SpecialCharacters","Spaces"}):print("Invalid argument. Options must be Letters, Numbers, or SpecialCharacters.\n");continue
+                    characters=(string.ascii_letters if "Letters" in set(parts[2:]) else "")+(string.digits if "Numbers" in set(parts[2:]) else "")+(string.punctuation if "SpecialCharacters" in set(parts[2:]) else "")+(" " if "Spaces" in set(parts[2:]) else "")
                     if not characters:print("Invalid argument. Please select at least one character type.\n");continue
-                    def password(length,characters):
-                        while True:
-                            password=''.join(random.choices(characters,k=length))
-                            if zxcvbn.zxcvbn(password)["score"] >= 3:return password
-                    print(f"{password()}")
-                else:print("Invalid argument. Please enter [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)].\n")
+                    while True:
+                        password=''.join(secrets.choice(characters) for _ in range(length))
+                        if zxcvbn.zxcvbn(password)["score"] >= 3:print(f"{password}\n");break
+                else:print("Invalid argument. Please enter [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)] & [() or (Spaces)].\n")
             elif main_command == "TimeToLoadUrl":
                 if len(parts) > 1:
                     url=' '.join(parts[1:])
@@ -294,6 +301,9 @@ def Main()->None:
                                 if i > 0:time.sleep(1)
                                 i -= 1
                             print();print("\033[A\033[KTimes up!\n")
+                            while True:
+                                try:os.system("play-audio -s alarm beep.mp3");time.sleep(29)
+                                except (KeyboardInterrupt,EOFError):raise KeyboardInterrupt
                         except (KeyboardInterrupt,EOFError):print();print()
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
                 else:print("Invalid argument. Please enter[<<Time>>].\n")
