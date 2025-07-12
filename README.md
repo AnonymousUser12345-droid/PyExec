@@ -48,6 +48,9 @@ Time: 12:02:36 AM
 [ YYYY/MM/DD HH:MM:SS XM ] $
 ```
 
+## Tested On
+- [Termux](https://termux.dev/en/)
+
 ## 🛠️ Installation
 
 ```bash
