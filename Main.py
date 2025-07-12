@@ -107,13 +107,14 @@ def getch(prompt:str="")->str:
     print();print("\033[?25l",end="");return ch
 
 def Main()->None:
-    print(f"""\033c\033[?25l\033[92;1m\
- ___         ___                                    _  ___                      _             \n\
-| _ \ _  _  / __| ___  _ __   _ __   __ _  _ _   __| || __|__ __ ___  __  _  _ | |_  ___  _ _ \n\
-|  _/| || || (__ / _ \| '  \ | '  \ / _` || ' \ / _` || _| \ \ // -_)/ _|| || ||  _|/ _ \| '_|\n\
-|_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\\___|\__| \_,_| \__|\___/|_|  \n\
-      |__/\
-\033[m\n\nWelcome to PyCommandExecutor, {get_username()}!\n\nEnter "\033[1;4mCommands?\033[m" for commands and "\033[1;4mExit Imm\033[m" to exit.\nUsername: {get_username()}\n{time.strftime("Date: %Y/%m/%d")}\n{time.strftime("Time: %I:%M:%S %p")}\n""")
+    print(f"""\033c\033[?25l\033[94;1m\
+__________        ___________
+\______   \___.__.\_   _____/__  ___ ____   ____
+ |     ___<   |  | |    __)_\  \/  // __ \_/ ___\ 
+ |    |    \___  | |        \>    <\  ___/\  \___
+ |____|    / ____|/_______  /__/\_ \\\___  >\___  >
+           \/             \/      \/    \/     \/\
+\033[m\n\nWelcome to PyExec, {get_username()}!\n\nEnter "\033[1;4mCommands?\033[m" for commands and "\033[1;4mExit Imm\033[m" to exit.\nUsername: {get_username()}\n{time.strftime("Date: %Y/%m/%d")}\n{time.strftime("Time: %I:%M:%S %p")}\n""")
     valid_commands=[
 "RerunCode",
 "Matrix",
@@ -139,7 +140,7 @@ def Main()->None:
 "CheckInternet",
 
     ]
-    input_text="\033[1;32m$\033[1;33m "
+    input_text="\033[1;92m₱\033[1;37m "
     stopwatch=False
     running=True
     for i in range(1,26+1):readline.parse_and_bind(f"\"\\x{i}\": self-insert") # Disables most of the ctrl shortcuts.
@@ -179,17 +180,42 @@ def Main()->None:
 - CheckInternet         [()]
 - CheckInternetSpeed    [()]
 """.replace("[()]","")) # Removes empty required arguments.
-            
+
+            elif main_command == "Timer":
+                if len(parts) > 1:
+                    try:
+                        time_str=' '.join(parts[1:]);time_parts=list(map(int,time_str.split(":")))
+                        if len(time_parts) == 2:hours=0;minutes,seconds=time_parts
+                        elif len(time_parts) == 3:hours,minutes,seconds=time_parts
+                        else:print("Invalid argument. Please use the format HH:MM:SS.\n")
+                        if any(t < 0 for t in (hours,minutes,seconds)):print("Invalid argument. Please enter non-negative values for hours, minutes and seconds.\n");continue
+                        total_seconds=hours * 3600 + minutes * 60 + seconds
+                        if total_seconds == 0:print("Invalid argument. Timer duration cannot be zero.\n");continue
+                        try:
+                            i=total_seconds
+                            while i >= 0:
+                                print(f"\r{i // 3600:02d}:{(i % 3600) // 60:02d}:{i % 60:02d}",end="",flush=True)
+                                if i > 0:time.sleep(1)
+                                i -= 1
+                            print();print("\033[A\033[KTimes up!")
+                            if shutil.which("play-audio") != None:
+                                while True:
+                                    try:os.system("play-audio -s alarm beep.mp3");time.sleep(29)
+                                    except (KeyboardInterrupt,EOFError):raise KeyboardInterrupt
+                            else:print()
+                        except (KeyboardInterrupt,EOFError):print();print()
+                    except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
+                else:print("Invalid argument. Please enter[<<Time>>].\n")
             elif command == "UpdateCode":
                 print()
                 while True:
                     confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
                     if confirm == "y":
-                        print(f"\033[A\033[K",end="");repo_url="https://github.com/AnonymousUser12345-droid/PyCommandExecutor/archive/refs/heads/main.zip";current_dir=pathlib.Path(__file__).parent.resolve();response=requests.get(repo_url);response.raise_for_status()
+                        print(f"\033[A\033[K",end="");repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip";current_dir=pathlib.Path(__file__).parent.resolve();response=requests.get(repo_url);response.raise_for_status()
                         with tempfile.NamedTemporaryFile(delete=False,suffix=".zip") as tmp_file:tmp_file.write(response.content);zip_path=tmp_file.name
                         with tempfile.TemporaryDirectory() as temp_dir:
                             with zipfile.ZipFile(zip_path,"r") as zip_ref:zip_ref.extractall(temp_dir)
-                            extracted_dir=pathlib.Path(temp_dir) / "PyCommandExecutor-main"
+                            extracted_dir=pathlib.Path(temp_dir) / "PyExec-main"
                             for item in extracted_dir.iterdir():
                                 if item.name not in [".git",".github","__pycache__"]:
                                     dest=current_dir / item.name
@@ -197,7 +223,7 @@ def Main()->None:
                                         if dest.exists():shutil.rmtree(dest)
                                         shutil.copytree(item,dest)
                                     else:shutil.copy2(item,dest)
-                        os.remove(zip_path);print("\033[A\033[KUpdate completed successfully.\n");exit()
+                        os.remove(zip_path);print("Update completed successfully.\n");exit()
                     elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
                     else:continue
             elif main_command == "DaysUntil":
@@ -284,29 +310,6 @@ def Main()->None:
                     if new_name == "default":shelve.open("Data")["Username"]=f"User {random.randint(1,100)}"
                     else:shelve.open("Data")["Username"]=new_name
                 else:print("Invalid argument. Please enter [<<Username>>].\n")
-            elif main_command == "Timer":
-                if len(parts) > 1:
-                    try:
-                        time_str=' '.join(parts[1:]);time_parts=list(map(int,time_str.split(":")))
-                        if len(time_parts) == 2:hours=0;minutes,seconds=time_parts
-                        elif len(time_parts) == 3:hours,minutes,seconds=time_parts
-                        else:print("Invalid argument. Please use the format HH:MM:SS.\n")
-                        if any(t < 0 for t in (hours,minutes,seconds)):print("Invalid argument. Please enter non-negative values for hours, minutes and seconds.\n");continue
-                        total_seconds=hours * 3600 + minutes * 60 + seconds
-                        if total_seconds == 0:print("Invalid argument. Timer duration cannot be zero.\n");continue
-                        try:
-                            i=total_seconds
-                            while i >= 0:
-                                print(f"\r{i // 3600:02d}:{(i % 3600) // 60:02d}:{i % 60:02d}",end="",flush=True)
-                                if i > 0:time.sleep(1)
-                                i -= 1
-                            print();print("\033[A\033[KTimes up!\n")
-                            while True:
-                                try:os.system("play-audio -s alarm beep.mp3");time.sleep(29)
-                                except (KeyboardInterrupt,EOFError):raise KeyboardInterrupt
-                        except (KeyboardInterrupt,EOFError):print();print()
-                    except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
-                else:print("Invalid argument. Please enter[<<Time>>].\n")
             elif command == "Time":
                 while True:
                     try:print("\r"+time.strftime(f"Date: %Y/%m/%d Time: %I:%M:%S %p"),end="",flush=True);time.sleep(.001)
