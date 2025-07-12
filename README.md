@@ -54,11 +54,6 @@ Time: 12:02:36 AM
 pkg update && pkg upgrade
 pkg install git python play-audio
 git clone https://github.com/AnonymousUser12345-droid/PyExec
-```
-
-## 🔧 Run
-
-```bash
 cd PyExec
 python Main.py
 ```
