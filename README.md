@@ -1,4 +1,4 @@
-# PyCommandExecutor
+# PyExec
 
 ## 🧑‍💻 Commands
 
@@ -31,13 +31,14 @@ Command                 Argument
 ## 👤 Appearance (in plain text)
 
 ```plain
- ___         ___                                    _  ___                      _             
-| _ \ _  _  / __| ___  _ __   _ __   __ _  _ _   __| || __|__ __ ___  __  _  _ | |_  ___  _ _ 
-|  _/| || || (__ / _ \| '  \ | '  \ / _` || ' \ / _` || _| \ \ // -_)/ _|| || ||  _|/ _ \| '_|
-|_|   \_, | \___|\___/|_|_|_||_|_|_|\__,_||_||_|\__,_||___|/_\_\\___|\__| \_,_| \__|\___/|_|  
-      |__/
+__________        ___________                     
+\______   \___.__.\_   _____/__  ___ ____   ____  
+ |     ___<   |  | |    __)_\  \/  // __ \_/ ___\ 
+ |    |    \___  | |        \>    <\  ___/\  \___ 
+ |____|    / ____|/_______  /__/\_ \\___  >\___  >
+           \/             \/      \/    \/     \/ 
 
-Welcome to PyCommandExecutor, User 89!
+Welcome to PyExec, User 89!
 
 Enter "Commands?" for commands, "Exit Imm" to exit.
 Username: User 89
@@ -52,13 +53,13 @@ Time: 12:02:36 AM
 ```bash
 pkg update && pkg upgrade
 pkg install git python play-audio
-git clone https://github.com/AnonymousUser12345-droid/PyCommandExecutor
+git clone https://github.com/AnonymousUser12345-droid/PyExec
 ```
 
 ## 🔧 Run
 
 ```bash
-cd PyCommandExecutor
+cd PyExec
 python Main.py
 ```
 
