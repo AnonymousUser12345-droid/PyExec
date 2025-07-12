@@ -69,5 +69,5 @@ python Main.py
 pip install password-strength requests simpleeval speedtest-cli zxcvbn
 ```
 
-## 🧑‍💻 Tested On
+## 🧑‍💻 Tested on
 - [Termux](https://termux.dev/en/)
