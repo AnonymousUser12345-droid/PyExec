@@ -1,6 +1,5 @@
 #####---------- Modules ----------#####
 
-from concurrent.futures import ThreadPoolExecutor
 import atexit
 import calendar
 import datetime
