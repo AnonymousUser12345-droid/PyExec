@@ -27,32 +27,9 @@ Command                 Argument
 - CheckInternet         
 - CheckInternetSpeed    
 ```
+## 📷 Screenshot
 
-## 👤 Appearance
-
-### 📄 Plain text
-
-```plain
-__________        ___________                     
-\______   \___.__.\_   _____/__  ___ ____   ____  
- |     ___<   |  | |    __)_\  \/  // __ \_/ ___\ 
- |    |    \___  | |        \>    <\  ___/\  \___ 
- |____|    / ____|/_______  /__/\_ \\___  >\___  >
-           \/             \/      \/    \/     \/ 
-
-Welcome to PyExec, User 89!
-
-Enter "Commands?" for commands, "Exit Imm" to exit.
-Username: User 89
-Date: 2025/06/27
-Time: 12:02:36 AM
-
-[ YYYY/MM/DD HH:MM:SS XM ] $
-```
-
-### 📷 Screenshot
-
-[]()
+![Screenshot](Screenshot.png)
 
 ## 🛠️ Installation
 
@@ -79,6 +56,3 @@ pip install Faker password-strength requests simpleeval speedtest-cli zxcvbn
 ```bash
 pkg install play-audio
 ```
-
-## 🧑‍💻 Tested on
-- [Termux](https://termux.dev/en/)
