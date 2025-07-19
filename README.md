@@ -28,7 +28,9 @@ Command                 Argument
 - CheckInternetSpeed    
 ```
 
-## 👤 Appearance (in plain text)
+## 👤 Appearance
+
+### 📄 Plain text
 
 ```plain
 __________        ___________                     
@@ -48,6 +50,10 @@ Time: 12:02:36 AM
 [ YYYY/MM/DD HH:MM:SS XM ] $
 ```
 
+### 📷 Screenshot
+
+[]()
+
 ## 🛠️ Installation
 
 ```bash
@@ -60,13 +66,18 @@ python Main.py
 
 ## 📦 Dependencies & 🛠️ Installation
 
+- [Faker](https://pypi.org/project/Faker)
 - [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 - [zxcvbn](https://pypi.org/project/zxcvbn/)
 ```bash
-pip install password-strength requests simpleeval speedtest-cli zxcvbn
+pip install Faker password-strength requests simpleeval speedtest-cli zxcvbn
+```
+- [play-audio](https://github.com/termux/play-audio)
+```bash
+pkg install play-audio
 ```
 
 ## 🧑‍💻 Tested on
