@@ -43,13 +43,11 @@ python main.py
 ## 📦 Dependencies & 🛠️ Installation
 
 - [Faker](https://pypi.org/project/Faker)
-- [password-strength](https://pypi.org/project/password-strength/)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
-- [zxcvbn](https://pypi.org/project/zxcvbn/)
 ```bash
-pip install Faker password-strength requests simpleeval speedtest-cli zxcvbn
+pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
 ```bash
