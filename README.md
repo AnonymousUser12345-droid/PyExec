@@ -3,29 +3,28 @@
 ## 🧑‍💻 Commands
 
 ```plain
-Command                 Argument
-- Commands?             
-- CommandHistory        [(List) or (Delete)]
-- Clear                 
-- DeleteData            
-- RerunCode             
-- UpdateCode            
-- Exit                  [() or (Imm)]
-- ChangeUsername        [<<Username>>]
-- Time                  [()]
-- DaysUntil             [<<Date>>] & [() or <<Date>>]
-- Calendar              [() or <<Year>>]
-- Timer                 [<<Time>>]
-- Stopwatch             [(Start) or (Stop) or (Reset)]
-- SelectRandomItem      [<<List>>]
-- SelectRandomNumber    [<<Number>>] & [<<Number>>]
-- GeneratePassword      [<<Length>>] & [() or (Letters)] & [() or (Numbers)] & [() or (SpecialCharacters)] & [() or (Spaces)]
-- CheckPasswordStrength [<<Password>>]
-- GenerateUsername      
-- Matrix                
-- TimeToLoadUrl         [<<Url>>]
-- CheckInternet         
-- CheckInternetSpeed    
+Command                Argument
+- Commands?
+- CommandHistory       [(List) or (Delete)]
+- Clear
+- DeleteData
+- RerunCode
+- UpdateCode
+- Exit                 [() or (Imm)]
+- ChangeUsername       [<<Username>>]
+- Time
+- DaysUntil            [<<Date>>] & [() or <<Date>>]
+- Calendar             [() or <<Year>>]
+- Timer                [<<Time>>]
+- Stopwatch            [(Start) or (Stop) or (Reset) or (RecentElapsedTime)]
+- RandomChoice         [<<List>>]
+- RandomInteger        [<<Integer>>] & [<<Integer>>]
+- GenerateUsername
+- GenerateFakeIdentity [
+- Matrix
+- TimeToLoadUrl        [<<Url>>]
+- CheckInternet
+- CheckInternetSpeed
 ```
 ## 📷 Screenshot
 
@@ -35,10 +34,10 @@ Command                 Argument
 
 ```bash
 pkg update && pkg upgrade
-pkg install git python play-audio
+pkg install git python
 git clone https://github.com/AnonymousUser12345-droid/PyExec
 cd PyExec
-python Main.py
+python main.py
 ```
 
 ## 📦 Dependencies & 🛠️ Installation
