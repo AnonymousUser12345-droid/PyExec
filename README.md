@@ -7,6 +7,7 @@ Command                Argument
 - Commands?
 - CommandHistory       [(List) or (Delete)]
 - Clear
+- GetSystemInfo        
 - DeleteData
 - RerunCode
 - UpdateCode
@@ -20,7 +21,7 @@ Command                Argument
 - RandomChoice         [<<List>>]
 - RandomInteger        [<<Integer>>] & [<<Integer>>]
 - GenerateUsername
-- GenerateFakeIdentity [
+- GenerateFakeIdentity 
 - Matrix
 - TimeToLoadUrl        [<<Url>>]
 - CheckInternet
@@ -28,7 +29,7 @@ Command                Argument
 ```
 ## 📷 Screenshot
 
-![Screenshot](Screenshot.png)
+![Screenshot]()
 
 ## 🛠️ Installation
 
