@@ -7,7 +7,6 @@ Command                Argument
 - Commands?
 - CommandHistory       [(List) or (Delete)]
 - Clear
-- GetSystemInfo        
 - DeleteData
 - RerunCode
 - UpdateCode
@@ -26,6 +25,7 @@ Command                Argument
 - TimeToLoadUrl        [<<Url>>]
 - CheckInternet
 - CheckInternetSpeed
+- GetSystemInfo        
 ```
 ## 📷 Screenshot
 
