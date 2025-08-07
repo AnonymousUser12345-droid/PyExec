@@ -3,29 +3,59 @@
 ## 🧑‍💻 Commands
 
 ```plain
-Command                Argument
-- Commands?
-- CommandHistory       [(List) or (Delete)]
-- Clear
-- DeleteData
-- RerunCode
-- UpdateCode
-- Exit                 [() or (Imm)]
-- ChangeUsername       [<<Username>>]
-- Time
-- DaysUntil            [<<Date>>] & [() or <<Date>>]
-- Calendar             [() or <<Year>>]
-- Timer                [<<Time>>]
-- Stopwatch            [(Start) or (Stop) or (Reset) or (RecentElapsedTime)]
-- RandomChoice         [<<List>>]
-- RandomInteger        [<<Integer>>] & [<<Integer>>]
-- GenerateUsername
-- GenerateFakeIdentity 
-- Matrix
-- TimeToLoadUrl        [<<Url>>]
-- CheckInternet
-- CheckInternetSpeed
-- GetSystemInfo        
+GetSystemInfo
+Commands?
+CommandHistory
+└── Arg1
+    ├── (List)
+    └── (Delete)
+ChangeUsername
+└── Arg1
+    └── <<Username>>
+Clear
+DeleteData
+RerunCode
+UpdateCode
+Exit
+└── Arg1
+    ├── ()
+    └── (Imm)
+Time
+DaysUntil
+    Arg1
+    └── <<Date>>
+└── Arg2
+    ├── ()
+    └── <<Date>>
+Calendar
+└── Arg1
+    ├── ()
+    └── <<Year>>
+Timer
+└── Arg1
+    └── <<Time>>
+Stopwatch
+└── Arg1
+    ├── (Start)
+    ├── (Stop)
+    ├── (Reset)
+    └── (RecentElapsedTime)
+RandomChoice
+└── Arg1
+    └── <<List>>
+RandomInteger
+├── Arg1
+│   └── <<Integer>>
+└── Arg2
+    └── <<Integer>>
+GenerateUsername
+GenerateFakeIdentity
+Matrix
+TimeToLoadUrl
+└── Arg1
+    └── <<Url>>
+CheckInternet
+CheckInternetSpeed
 ```
 ## 📷 Screenshot
 
@@ -51,6 +81,7 @@ python main.py
 pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
+- [fastfetch]()
 ```bash
-pkg install play-audio
+pkg install play-audio fastfetch
 ```
