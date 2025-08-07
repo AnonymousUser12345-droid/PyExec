@@ -67,7 +67,6 @@ except ImportError as e:print(f"Critical import error: {repr(e)}");sys.exit(1)
 
 #####---------- Check System Packages ----------#####
 
-'''
 REQUIRED_PACKAGES=[
 "play-audio",
 "fastfetch",
@@ -92,7 +91,6 @@ if missing_packages:
         print("\nWarning: Some packages are still missing after installation:")
         for mod in still_missing:print(f"- {package} (tried installing {package})")
         print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");sys.exit(1)
-'''
 
 #####---------- Data ----------#####
 
@@ -107,9 +105,7 @@ try:
         for key,value in default_data.items():
             if key in db:pass
             else:db[key]=value
-except dbm.gnu.error as e:
-    print(f"File data.db is corrupted try deleting it using \"rm data.db\".\n")
-    exit(1)
+except dbm.gnu.error as e:print(f"File data.db is corrupted try deleting it using \"rm data.db\".\n");sys.exit(1)
 
 #####---------- Other Functions ----------#####
 
