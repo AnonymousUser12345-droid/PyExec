@@ -261,7 +261,7 @@ CheckInternetSpeed
 
             elif command == "GenerateFakeIdentity":
                 not_implemented(main_command)
-            elif command == "GetSystemInfo":os.system("fastfetch");print("\033[A\033[K")
+            elif command == "GetSystemInfo":os.system("fastfetch");print("\n\033[A\033[K")
             elif command == "Matrix":
                 while True:
                     try:
