@@ -59,7 +59,7 @@ CheckInternetSpeed
 ```
 ## 📷 Screenshot
 
-![Screenshot]()
+![screenshot]()
 
 ## 🛠️ Installation
 
