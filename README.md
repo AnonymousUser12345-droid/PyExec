@@ -81,7 +81,7 @@ python main.py
 pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
-- [fastfetch]()
+- [fastfetch](https://github.com/fastfetch-cli/fastfetch)
 ```bash
 pkg install play-audio fastfetch
 ```
