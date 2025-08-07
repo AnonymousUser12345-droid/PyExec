@@ -1,5 +1,4 @@
-password-strength
+Faker
 requests
 simpleeval
 speedtest-cli
-zxcvbn
