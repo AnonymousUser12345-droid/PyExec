@@ -1,11 +1,11 @@
 #####---------- Import Modules ----------#####
 
-import atexit
 import calendar
 import datetime
 import dbm # For getting error if data file gets corrupted.
 import difflib
 import importlib
+import io
 import itertools
 import keyword
 import math
@@ -67,6 +67,7 @@ except ImportError as e:print(f"Critical import error: {repr(e)}");sys.exit(1)
 
 #####---------- Check System Packages ----------#####
 
+'''
 REQUIRED_PACKAGES=[
 "play-audio",
 "fastfetch",
@@ -91,6 +92,7 @@ if missing_packages:
         print("\nWarning: Some packages are still missing after installation:")
         for mod in still_missing:print(f"- {package} (tried installing {package})")
         print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");sys.exit(1)
+'''
 
 #####---------- Data ----------#####
 
@@ -118,13 +120,14 @@ def getch(prompt:str="")->str:
 def not_implemented(command:str)->None:
     print(f"Command functionality has not yet been implemented: \"{command}\".\n")
 
-@atexit.register
-def at_exit():
-    print("\033[m\033[?25h",end="")
+
 
 
 
 #####---------- Retrieve Data ----------#####
+
+def version()->float:
+    return float(open("version").read())
 
 def username()->str:
     username=shelve.open("data.db")["Username"].strip()
@@ -136,6 +139,9 @@ def command_history()->list[str]:
 
 def recent_stopwatch_elapsed_time()->int:
     return shelve.open("data.db")["RecentStopwatchElapsedTime"]
+
+def data()->str:
+    return f"""Version: {version()}\nUsername: {username()}\nCommand History Size: {len(command_history())}\nRecent Stopwatch Elapsed Time: {recent_stopwatch_elapsed_time()}"""
 
 
 
@@ -156,7 +162,7 @@ __________        ___________
  |    |    \___  | |        \>    <\  ___/\  \___
  |____|    / ____|/_______  /__/\_ \\\___  >\___  >
            \/             \/      \/    \/     \/\
-\033[m\n\nWelcome to PyExec, {username()}!\n\nEnter "\033[1;4mCommands?\033[m" for commands and "\033[1;4mExit Imm\033[m" to exit.\nUsername: {username()}\nCommandHistory: {len(command_history())}\n{time.strftime("Date: %Y/%m/%d")}\n{time.strftime("Time: %I:%M:%S %p")}\n""")
+\033[m\n\nWelcome to PyExec, {username()}!\n\nEnter "\033[1;4mCommands?\033[m" for commands and "\033[1;4mExit Imm\033[m" to exit.\n{data()}\n{time.strftime("Date: %Y/%m/%d")}\n{time.strftime("Time: %I:%M:%S %p")}\n""")
     valid_commands="""\
 RerunCode
 Matrix
@@ -181,6 +187,7 @@ ChangeUsername
 CheckInternet
 GenerateFakeIdentity
 GetSystemInfo
+SeeData
 
 """.split()
     input_text="\033[1;90m╰── \033[m>>>\033[1;37m "
@@ -214,6 +221,7 @@ ChangeUsername
 └── Arg1
     └── <<Username>>
 Clear
+SeeData
 DeleteData
 RerunCode
 UpdateCode
@@ -223,8 +231,8 @@ Exit
     └── (Imm)
 Time
 DaysUntil
-    Arg1
-    └── <<Date>>
+├── Arg1
+│   └── <<Date>>
 └── Arg2
     ├── ()
     └── <<Date>>
@@ -261,6 +269,36 @@ CheckInternetSpeed
 
             elif command == "GenerateFakeIdentity":
                 not_implemented(main_command)
+            elif command == "UpdateCode":
+                print()
+                while True:
+                    confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
+                    if confirm == "y":
+                        repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip" # Url to the github repository.
+                        ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version"
+                        response=requests.get(repo_url)
+                        response.raise_for_status()
+                        version=requests.get(ver_url).text
+                        version.raise_for_status()
+                        if version() > float(version):
+                            print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
+                            for file in os.listdir():
+                                if file != "data.db":os.remove(file)
+                            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                                root_folder=zip_ref.namelist()[0].split('/')[0]
+                                for file in zip_ref.namelist(): # Extract all files, removing the root folder prefix.
+                                    if not file.endswith('/'):  # Skip directories.
+                                        new_path=file.replace(root_folder + '/', '', 1) # Remove the root folder from the path.
+                                        zip_ref.extract(file, '.')  # Extract directly to current directory.
+                                        os.rename(file, new_path)
+                                os.rmdir(root_folder) # Remove the empty root folder.
+                            print("\033[A\033[KUpdate completed successfully.\n")
+                            exit()
+                        else:
+                            print("\033[A\033[KUpdate code cancelled. PyExec is already up to date.\n")
+                    elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
+                    else:continue
+            elif command == "SeeData":print(f"{data()}\n")
             elif command == "GetSystemInfo":os.system("fastfetch");print("\n\033[A\033[K")
             elif command == "Matrix":
                 while True:
@@ -283,54 +321,12 @@ CheckInternetSpeed
                     except ValueError:print("Invalid argument. Please enter an integer.\n");continue
                     if first_num > second_num:print("Invalid argument. Please enter an integer greater than the first integer for the second number.\n");continue
                     print(f"{random.randint(first_num,second_num)}\n")
-                else:print("Invalid argument. Please enter [<<Integer>>] & [<<Integer>>].\n")
-            elif command == "UpdateCode":
-                print()
-                while True:
-                    confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
-                    if confirm == "y":
-                        print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(15);print("\033[A\033[K",end="") # Start update with 15 seconds countdown.
-                        repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip" # Url to the github repository.
-                        current_dir=pathlib.Path(__file__).parent.resolve() # Gets current path.
-                        response=requests.get(repo_url) # Download PyExec zip file.
-                        response.raise_for_status() # Check status.
-                        with tempfile.NamedTemporaryFile(delete=False,suffix=".zip") as tmp_file:
-                            tmp_file.write(response.content)
-                            zip_path=tmp_file.name
-                        with tempfile.TemporaryDirectory() as temp_dir:
-                            with zipfile.ZipFile(zip_path,"r") as zip_ref:
-                                zip_ref.extractall(temp_dir) # Extract the contents from inside the PyExec zip file.
-                            extracted_dir=pathlib.Path(temp_dir) / "PyExec-main"
-                            for item in extracted_dir.iterdir():
-                                if item.name not in [".git",".github","__pycache__"]:
-                                    dest=current_dir / item.name
-                                    if item.is_dir():
-                                        if dest.exists():
-                                            shutil.rmtree(dest)
-                                        shutil.copytree(item,dest)
-                                    else:
-                                        shutil.copy2(item,dest)
-                        os.remove(zip_path) # Remove zip file.
-                        print("\033[A\033[KUpdate completed successfully.\n")
-                        
-                        exit()
-                        """
-repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip";current_dir=pathlib.Path(__file__).parent.resolve();response=requests.get(repo_url);response.raise_for_status()
-with tempfile.NamedTemporaryFile(delete=False,suffix=".zip") as tmp_file:tmp_file.write(response.content);zip_path=tmp_file.name
-with tempfile.TemporaryDirectory() as temp_dir:
-    with zipfile.ZipFile(zip_path,"r") as zip_ref:zip_ref.extractall(temp_dir)
-    extracted_dir=pathlib.Path(temp_dir) / "PyExec-main"
-    for item in extracted_dir.iterdir():
-        if item.name not in [".git",".github","__pycache__"]:
-            dest=current_dir / item.name
-            if item.is_dir():
-                if dest.exists():shutil.rmtree(dest)
-                shutil.copytree(item,dest)
-            else:shutil.copy2(item,dest)
-os.remove(zip_path)
-                        """
-                    elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
-                    else:continue
+                else:print("""Invalid argument. Usage
+RandomInteger
+├── Arg1
+│   └── <<Integer>>
+└── Arg2
+    └── <<Integer>>\n""")
             elif main_command == "Stopwatch":
                 if len(parts) > 1:
                     if ' '.join(parts[1:]) == "Start":
@@ -341,8 +337,14 @@ os.remove(zip_path)
                         else:print("Stopwatch is not running.\n")
                     elif ' '.join(parts[1:]) == "Reset":stopwatch=False;stopwatch_start_time=None;rset=0;shelve.open("data.db")["RecentStopwatchElapsedTime"]=0;print("Stopwatch reset.\n")
                     elif ' '.join(parts[1:]) == "RecentElapsedTime":print(f"{shelve.open('data')['RecentStopwatchElapsedTime']}\n")
-                    else:print("Invalid argument. Please enter [(Start) or (Stop) or (Reset)].\n")
-                else:print("Invalid argument. Please enter [(Start) or (Stop) or (Reset)].\n")
+                    else:print("Invalid argument. Options are only Start, Stop, Reset, and RecentElapsedTime.\n")
+                else:print("""Invalid argument. Usage
+Stopwatch
+└── Arg1
+    ├── (Start)
+    ├── (Stop)
+    ├── (Reset)
+    └── (RecentElapsedTime)\n""")
             elif main_command == "Timer":
                 if len(parts) > 1:
                     try:
@@ -367,7 +369,10 @@ os.remove(zip_path)
                             else:print()
                         except (KeyboardInterrupt,EOFError):print();print()
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
-                else:print("Invalid argument. Please enter[<<Time>>].\n")
+                else:print("""Invalid argument. Usage
+Timer
+└── Arg1
+    └── <<Time>>\n""")
             elif main_command == "DaysUntil":
                 if len(parts) >= 2:
                     try:
@@ -385,14 +390,23 @@ os.remove(zip_path)
                             if days_left == 0:print("The target date is today.\n")
                             else:print(f"There are {days_left} day{'' if days_left == 1 else 's'} left until {target_date}.\n")
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format YYYY/MM/DD.\n")
-                else:print("Invalid argument. Please enter [<<Date>>] & [() or <<Date>>].\n")
+                else:print("""Invalid argument. Usage
+DaysUntil
+├── Arg1
+│   └── <<Date>>
+└── Arg2
+    ├── ()
+    └── <<Date>>\n""")
             elif main_command == "TimeToLoadUrl":
                 if len(parts) > 1:
                     url=' '.join(parts[1:])
                     if " " in url:print("Invalid argument. Url cannot contain spaces.\n");break
                     if ("https" or "http") not in url:url="https://"+url
                     start_time=time.time();requests.get(url);end_time=time.time();print(f"Time spent: [{int((end_time - start_time) // 3600):02d}:{int((end_time - start_time) % 3600 // 60):02d}:{int((end_time - start_time) % 60):02d}.{int(((end_time - start_time) - int(end_time - start_time)) * 1000):02d}] loading url.\n")
-                else:print("Invalid argument. Please enter [<<Url>>].\n")
+                else:print("""Invalid argument. Usage
+TimeToLoadUrl
+└── Arg1
+    └── <<Url>>\n""")
             elif command == "CheckInternetSpeed":
                 while True:
                     try:start_time=time.time();st=speedtest.Speedtest();st.get_best_server();print(f"Download speed: {(st.download() / 10000000):.2f} Mbps\nUpload speed:   {(st.upload() / 1000000):.2f} Mbps\nPing:           {(st.results.ping):.2f} ms");end_time=time.time();print(f"Duration:       [{int((end_time - start_time) // 3600):02d}:{int((end_time - start_time) % 3600 // 60):02d}:{int((end_time - start_time) % 60):02d}.{int(((end_time - start_time) - int(end_time - start_time)) * 1000):02d}]\n");break
@@ -414,7 +428,10 @@ os.remove(zip_path)
                     if not new_name:print("Invalid argument. Username cannot be empty.\n");continue
                     if new_name == "default":shelve.open("data.db")["Username"]=f"User {random.randint(1,100)}"
                     else:shelve.open("data.db")["Username"]=new_name
-                else:print("Invalid argument. Please enter [<<Username>>].\n")
+                else:print("""Invalid argument. Usage
+ChangeUsername
+└── Arg1
+    └── <<Username>>\n""")
             elif command == "Time":
                 while True:
                     try:print(time.strftime(f"\rDate: %Y/%m/%d Time: %I:%M:%S %p"),end="",flush=True);time.sleep(.001)
@@ -427,11 +444,18 @@ os.remove(zip_path)
                     elif ' '.join(parts[1:]) == "Delete":
                         if not command_history():print("No recent commands.\n")
                         else:shelve.open("data.db")["CommandHistory"]=[];print("Recent commands deleted.\n")
-                    else:print("Invalid argument. Please enter [(List) or (Delete)].\n")
-                else:print("Invalid argument. Please enter [(List) or (Delete)].\n")
+                    else:print("Invalid argument. Options are only List, and Delete.\n")
+                else:print("""Invalid argument. Usage
+CommandHistory
+└── Arg1
+    ├── (List)
+    └── (Delete)\n""")
             elif main_command == "RandomChoice":
                 if len(parts) > 1:items=parts[1:];print("Invalid argument. Please provide atleast 2 choices separated by space.\n") if len(items) < 2 else print(f"{random.choice(items)}\n")
-                else:print("Invalid argument. Please enter [<<List>>].\n")
+                else:print("""Invalid argument. Usage
+RandomChoice
+└── Arg1
+    └── <<List>>\n""")
             elif command == "DeleteData":
                 print()
                 while True:
@@ -442,7 +466,11 @@ os.remove(zip_path)
             elif main_command == "Exit":
                 if len(parts) > 1:
                     if ' '.join(parts[1:]) == "Imm":end_time=time.time();print(f"Exited, Time spent: [{int((end_time - start_time) // 3600):02d}:{int((end_time - start_time) % 3600 // 60):02d}:{int((end_time - start_time) % 60):02d}.{int(((end_time - start_time) - int(end_time - start_time)) * 1000):02d}]\033[m\n");exit()
-                    else:print("Invalid argument. Please enter [() or (Imm)].\n")
+                    else:print("""Invalid argument. Usage
+Exit
+└── Arg1
+    ├── ()
+    └── (Imm)\n""")
                 else:
                     print()
                     while True:
@@ -459,6 +487,8 @@ os.remove(zip_path)
         except (KeyboardInterrupt,EOFError):print(f"\nPyExec interrupted.\n");exit()
         except Exception as error:print(f"Error: {repr(error)}.\n")
 
-if __name__ == "__main__":Main()
+try:
+    if __name__ == "__main__":Main()
+finally:print("\033[m\033[?25h",end="")
 
 #####---------- END ----------#####
