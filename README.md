@@ -22,8 +22,8 @@ Exit
     └── (Imm)
 Time
 DaysUntil
-    Arg1
-    └── <<Date>>
+├── Arg1
+│   └── <<Date>>
 └── Arg2
     ├── ()
     └── <<Date>>
