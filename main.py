@@ -122,8 +122,6 @@ def not_implemented(command:str)->None:
 
 
 
-
-
 #####---------- Retrieve Data ----------#####
 
 def version()->float:
@@ -278,9 +276,9 @@ CheckInternetSpeed
                         ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version"
                         response=requests.get(repo_url)
                         response.raise_for_status()
-                        version=requests.get(ver_url).text
+                        version=requests.get(ver_url)
                         version.raise_for_status()
-                        if version() > float(version):
+                        if version() > float(version.text):
                             print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
                             for file in os.listdir():
                                 if file != "data.db":os.remove(file)
