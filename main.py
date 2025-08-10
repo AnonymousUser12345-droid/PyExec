@@ -122,6 +122,8 @@ def not_implemented(command:str)->None:
 
 
 
+
+
 #####---------- Retrieve Data ----------#####
 
 def version()->float:
@@ -145,10 +147,15 @@ def data()->str:
 
 #####---------- Main ----------#####
 
-""" Prompt Text
+"""
+
+Prompt Text
+
+╭ [ 2025/08/14 12:00:00 AM ]
+╰── >>> Commands?
 
 ╭ [ YYYY/MM/DD HH:MM:SS XM ]—[ Exit: "Exit Imm" ]
-╰── >>>
+╰── >>> 
 
 """
 
@@ -273,27 +280,25 @@ CheckInternetSpeed
                     confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
                     if confirm == "y":
                         repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip" # Url to the github repository.
-                        ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version"
+                        ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version" # Url to the github repository's version raw file.
                         response=requests.get(repo_url)
                         response.raise_for_status()
-                        version=requests.get(ver_url)
-                        version.raise_for_status()
-                        if version() > float(version.text):
+                        ver=requests.get(ver_url)
+                        ver.raise_for_status()
+                        if version() > float(ver.text):
                             print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
                             for file in os.listdir():
                                 if file != "data.db":os.remove(file)
                             with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-                                root_folder=zip_ref.namelist()[0].split('/')[0]
+                                root_folder=zip_ref.namelist()[0].split("/")[0]
                                 for file in zip_ref.namelist(): # Extract all files, removing the root folder prefix.
-                                    if not file.endswith('/'):  # Skip directories.
-                                        new_path=file.replace(root_folder + '/', '', 1) # Remove the root folder from the path.
-                                        zip_ref.extract(file, '.')  # Extract directly to current directory.
-                                        os.rename(file, new_path)
+                                    if not file.endswith("/"):  # Skip directories.
+                                        new_path=file.replace(root_folder + "/","",1) # Remove the root folder from the path.
+                                        zip_ref.extract(file,".")  # Extract directly to current directory.
+                                        os.rename(file,new_path)
                                 os.rmdir(root_folder) # Remove the empty root folder.
-                            print("\033[A\033[KUpdate completed successfully.\n")
-                            exit()
-                        else:
-                            print("\033[A\033[KUpdate code cancelled. PyExec is already up to date.\n")
+                            print("\033[A\033[KUpdate completed successfully.\n");exit()
+                        else:print("\033[A\033[KUpdate code cancelled. PyExec is already up to date.\n");break
                     elif confirm == "n":print("\033[A\033[KUpdate code cancelled.\n");break
                     else:continue
             elif command == "SeeData":print(f"{data()}\n")
@@ -482,7 +487,7 @@ Exit
                     valid_commands_lower=[cmd.lower() for cmd in valid_commands];suggestions=difflib.get_close_matches(main_command.lower(),valid_commands_lower,n=3,cutoff=.6)
                     if suggestions:suggestions_original_case=[valid_commands[valid_commands_lower.index(s)] for s in suggestions];print((f"Did you mean: \"{suggestions_original_case[0]}\".\n") if len(suggestions_original_case) == 1 else ("Did you mean one of these: "+", ".join(f"\"{s}\"" for s in suggestions_original_case)+".\n"))
                     else:print(f"Unknown command: \"{main_command}\".\n")
-        except (KeyboardInterrupt,EOFError):print(f"\nPyExec interrupted.\n");exit()
+        except (KeyboardInterrupt,EOFError):print(f"\n\033[90mPyExec interrupted.\n\033[m");exit()
         except Exception as error:print(f"Error: {repr(error)}.\n")
 
 try:
