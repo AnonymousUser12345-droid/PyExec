@@ -86,7 +86,7 @@ pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
-- [espeak]()
+- [espeak](https://github.com/espeak-ng/espeak-ng)
 ```bash
 pkg install play-audio fastfetch espeak
 ```
