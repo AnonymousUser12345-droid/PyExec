@@ -13,6 +13,8 @@ ChangeUsername
 └── Arg1
     └── <<Username>>
 Clear
+Pass
+SeeData
 DeleteData
 RerunCode
 UpdateCode
@@ -49,17 +51,19 @@ RandomInteger
 └── Arg2
     └── <<Integer>>
 GenerateUsername
-GenerateFakeIdentity
 Matrix
 TimeToLoadUrl
 └── Arg1
     └── <<Url>>
 CheckInternet
 CheckInternetSpeed
+Speak
+└── Arg1
+    └── <<String>>
 ```
 ## 📷 Screenshot
 
-![screenshot]()
+![screenshot](screenshot.png)
 
 ## 🛠️ Installation
 
@@ -82,6 +86,7 @@ pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
+- [espeak]()
 ```bash
-pkg install play-audio fastfetch
+pkg install play-audio fastfetch espeak
 ```
