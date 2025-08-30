@@ -11,13 +11,21 @@ CommandHistory
     └── (Delete)
 ChangeUsername
 └── Arg1
+    ├── (Default)
     └── <<Username>>
+ChangeAlarmSound
+└── Arg1
+    ├── (Default)
+    └── <<AlarmFileName>>
 Clear
 Pass
 SeeData
 DeleteData
 RerunCode
 UpdateCode
+└── Arg1
+    ├── ()
+    └── (Check)
 Exit
 └── Arg1
     ├── ()
@@ -50,16 +58,12 @@ RandomInteger
 │   └── <<Integer>>
 └── Arg2
     └── <<Integer>>
-GenerateUsername
 Matrix
 TimeToLoadUrl
 └── Arg1
     └── <<Url>>
 CheckInternet
 CheckInternetSpeed
-Speak
-└── Arg1
-    └── <<String>>
 ```
 ## 📷 Screenshot
 
