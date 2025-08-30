@@ -75,7 +75,6 @@ def install_package(package_name)->True|False:
     try:subprocess.check_call(["pkg","install",package_name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);return True
     except subprocess.CalledProcessError:return False
 
-"""
 missing_packages=[pkg for pkg in REQUIRED_PACKAGES if not package_available(pkg)]
 if missing_packages:
     print("Installing missing packages...\n")
@@ -87,7 +86,6 @@ if missing_packages:
         print("\nWarning: Some packages are still missing after installation:")
         for mod in still_missing:print(f"- {package} (tried installing {package})")
         print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");exit(1)
-"""
 
 # Data
 
