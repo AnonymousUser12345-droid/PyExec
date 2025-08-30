@@ -46,19 +46,19 @@ if missing_modules:
     for module in missing_modules:
         package=REQUIRED_MODULES[module]
         print(f"- Installing {package} for {module}.")
-        if not install_package(package):print(f"Error: Failed to install {package}. Please install manually using \"pip install {package}\".\n");sys.exit(1)
+        if not install_package(package):print(f"Error: Failed to install {package}. Please install manually using \"pip install {package}\".\n");exit(1)
     still_missing=[mod for mod in missing_modules if not module_available(mod)]
     if still_missing:
         print("\nWarning: Some modules are still missing after installation:")
         for mod in still_missing:print(f"- {mod} (tried installing {REQUIRED_MODULES[mod]})")
-        print("\nPlease install manually using \"pip install -r requirements.txt\" and restart the script.\n");sys.exit(1)
+        print("\nPlease install manually using \"pip install -r requirements.txt\" and restart the script.\n");exit(1)
 
 try:
     import requests
     import simpleeval
     import speedtest
     
-except ImportError as e:print(f"Critical import error: {repr(e)}");sys.exit(1)
+except ImportError as e:print(f"Critical import error: {repr(e)}");exit(1)
 
 # Check System Packages
 
@@ -80,12 +80,12 @@ if missing_packages:
     print("Installing missing packages...\n")
     for package in missing_packages:
         print(f"- Installing {package}.")
-        if not install_package(package):print(f"Error: Failed to install {package}. Please install manually using \"pkg install {package}\".\n");sys.exit(1)
+        if not install_package(package):print(f"Error: Failed to install {package}. Please install manually using \"pkg install {package}\".\n");exit(1)
     still_missing=[pkg for pkg in missing_packages if not package_available(pkg)]
     if still_missing:
         print("\nWarning: Some packages are still missing after installation:")
         for mod in still_missing:print(f"- {package} (tried installing {package})")
-        print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");sys.exit(1)
+        print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");exit(1)
 
 # Data
 
@@ -101,7 +101,7 @@ try:
         for key,value in default_data.items():
             if key in db:pass
             else:db[key]=value
-except dbm.gnu.error as e:print(f"File data.db is corrupted try deleting it using \"rm data.db\".\n");sys.exit(1)
+except dbm.gnu.error as e:print(f"File data.db is corrupted try deleting it using \"rm data.db\".\n");exit(1)
 
 # Other Functions
 
@@ -203,7 +203,7 @@ ChangeAlarmSound
     while running:
         try:
             print("\033[?25h",end="")
-            command=input("\033[1;90m╭ [\033[m YYYY/MM/DD HH:MM:SS XM \033[1;90m]—[\033[m Exit: \"Exit Imm\" \033[1;90m]\n"+input_text).strip()  # Main prompt. | Things you can do -> Use command - ex. Commands? | Evaluate simple math expressions ex. 1 + 1 | Print string - ex. "Hello, World"
+            command=input("\033[1;90m╭ [\033[m YYYY/MM/DD HH:MM:SS XM \033[1;90m]—[\033[m Exit: \"Exit Imm\" \033[1;90m]\n"+input_text).strip()  # Main prompt. | Things you can do -> Use command ex. Commands? | Evaluate simple math expressions ex. 1 + 1 | Print string ex. "Hello, World"
             print("\033[90m\033[?25l",end="")
             if command.strip():
                 time_of_command=time.strftime("%Y/%m/%d %I:%M:%S %p");print(f"\033[A\033[K\033[A\033[K\033[1;90m╭ [\033[m {time_of_command} \033[1;90m]\n{input_text}{command}\033[0;90m");parts=shlex.split(command);main_command=parts[0]
@@ -332,14 +332,14 @@ ChangeAlarmSound
                         elif len(time_parts) == 3:hours,minutes,seconds=time_parts
                         else:print("Invalid argument. Please use the format HH:MM:SS.\n")
                         if any(t < 0 for t in (hours,minutes,seconds)):print("Invalid argument. Please enter non-negative values for hours, minutes and seconds.\n");continue
-                        total_seconds=hours * 3600+minutes * 60+seconds
+                        total_seconds=hours*3600+minutes*60+seconds
                         if total_seconds == 0:print("Invalid argument. Timer duration cannot be zero.\n");continue
                         try:
                             i=total_seconds
                             while i >= 0:
-                                print(f"\r{i // 3600:02d}:{(i % 3600) // 60:02d}:{i % 60:02d}",end="",flush=True)
+                                print(f"\r{i//3600:02d}:{(i%3600)//60:02d}:{i%60:02d}",end="",flush=True)
                                 if i > 0:time.sleep(1)
-                                i -= 1
+                                i-=1
                             print();print("\033[A\033[KTimes up!")
                             alarm_file=alarm_file_name()
                             if package_available("play-audio") and os.path.exists(alarm_file):
@@ -355,13 +355,13 @@ Timer
     └── <<Time>>\n""")
             elif command == "Pass":print() # Litterally useless.
             elif command == "SeeData":print(f"{data()}\n")
-            elif command == "GetSystemInfo":os.system("fastfetch");print("\n\033[A\033[K")
+            elif command == "GetSystemInfo":subprocess.run(["fastfetch"]);print()
             elif command == "Matrix":
                 while True:
                     try:
                         for i in range(1,5+1):
-                            if random.random() < .09 ** i:print(end="\n" * i,flush=True)
-                        random_gibberish_code=list("".join(random.choice(string.ascii_letters+string.digits+string.punctuation+(" " * 10))) for _ in range(random.randint(random.randint(28,60),random.randint(84,90))))
+                            if random.random() < .09 ** i:print(end="\n"*i,flush=True)
+                        random_gibberish_code=list("".join(random.choice(string.ascii_letters+string.digits+string.punctuation+(" "*10))) for _ in range(random.randint(random.randint(28,60),random.randint(84,90))))
                         for _ in range(1,random.randint(1,10)+1):pos=random.randint(0,len(random_gibberish_code));random_gibberish_code[pos:pos]=list(random.choice([random.choice(("".join(char.upper() if random.random() < .5 else char.lower() for char in keyword),keyword.upper(),keyword.lower(),keyword)) for keyword in keyword.kwlist+["then","fi","do","done","esac","function","select","read","echo","test",]+["auto","break","case","char","const","continue","default","do","double","else","enum","extern","float","for","goto","if","inline","int","long","register","restrict","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while","_Alignas","_Alignof","_Atomic","_Bool","_Complex","_Generic","_Imaginary","_Noreturn","_Static_assert","_Thread_local",]]))
                         print("\033[m"+random.choice(["\033[32m","\033[1;32m"])+"".join(random_gibberish_code),flush=True);time.sleep(.01)
                     except (KeyboardInterrupt,EOFError):print();print();break
@@ -385,7 +385,7 @@ RandomInteger
                         if stopwatch == False:stopwatch_start_time=time.time();stopwatch=True;print("Stopwatch is running.\n")
                         else:print("Stopwatch is already running.\n")
                     elif " ".join(parts[1:]) == "Stop":
-                        if stopwatch:elapsed=(time.time() - stopwatch_start_time)+rset;rset=elapsed;shelve.open("data.db")["RecentStopwatchElapsedTime"]=elapsed;stopwatch=False;print(f"Stopwatch stopped.\nElapsed time: [{int((elapsed) // 3600):02d}:{int((elapsed) % 3600 // 60):02d}:{int((elapsed) % 60):02d}.{int(((elapsed) - int(elapsed)) * 1000):02d}]\n")
+                        if stopwatch:elapsed=(time.time()-stopwatch_start_time)+rset;rset=elapsed;shelve.open("data.db")["RecentStopwatchElapsedTime"]=elapsed;stopwatch=False;print(f"Stopwatch stopped.\nElapsed time: [{int((elapsed)//3600):02d}:{int((elapsed)%3600//60):02d}:{int((elapsed)%60):02d}.{int(((elapsed)-int(elapsed))*1000):02d}]\n")
                         else:print("Stopwatch is not running.\n")
                     elif " ".join(parts[1:]) == "Reset":stopwatch=False;stopwatch_start_time=None;rset=0;shelve.open("data.db")["RecentStopwatchElapsedTime"]=0;print("Stopwatch reset.\n")
                     elif " ".join(parts[1:]) == "RecentElapsedTime":print(f"{shelve.open('data')['RecentStopwatchElapsedTime']}\n")
@@ -404,13 +404,13 @@ Stopwatch
                         if len(parts) >= 3:
                             target_date2=datetime.datetime.strptime(" ".join(parts[2:]),"%Y/%m/%d").date()
                             if target_date > target_date2:print("Invalid argument. Target date cannot be in the past.\n");continue
-                            else:days_left=(target_date2 - target_date).days
+                            else:days_left=(target_date2-target_date).days
                             if days_left == 0:print(f"The target date is today if the current date is {target_date}.\n")
                             else:print(f"There are {days_left} day{'' if days_left == 1 else 's'} left until {target_date2} if the current date is {target_date}.\n")
                         else:
                             today=datetime.date.today()
                             if target_date < today:print("Invalid argument. Target date cannot be in the past.\n");continue
-                            else:days_left=(target_date - today).days
+                            else:days_left=(target_date-today).days
                             if days_left == 0:print("The target date is today.\n")
                             else:print(f"There are {days_left} day{'' if days_left == 1 else 's'} left until {target_date}.\n")
                     except ValueError as e:print(f"Invalid argument. {e}. Please use the format YYYY/MM/DD.\n")
@@ -426,14 +426,14 @@ DaysUntil
                     url=" ".join(parts[1:])
                     if " " in url:print("Invalid argument. Url cannot contain spaces.\n");break
                     if ("https" or "http") not in url:url="https://"+url
-                    start_time=time.time();requests.get(url);end_time=time.time();time_spent=end_time - start_time;print(f"Time spent: [{int(time_spent // 3600):02d}:{int(time_spent % 3600 // 60):02d}:{int(time_spent % 60):02d}.{int((time_spent - int(time_spent)) * 1000):02d}] loading url.\n")
+                    start_time=time.time();requests.get(url);end_time=time.time();time_spent=end_time-start_time;print(f"Time spent: [{int(time_spent//3600):02d}:{int(time_spent%3600//60):02d}:{int(time_spent%60):02d}.{int((time_spent-int(time_spent))*1000):02d}] loading url.\n")
                 else:print("""Invalid usage. Usage
 TimeToLoadUrl
 └── Arg1
     └── <<Url>>\n""")
             elif command == "CheckInternetSpeed":
                 while True:
-                    try:start_time=time.time();st=speedtest.Speedtest();st.get_best_server();time_spent=end_time - start_time;print(f"Download speed: {(st.download() / 10000000):.2f} Mbps\nUpload speed:   {(st.upload() / 1000000):.2f} Mbps\nPing:           {(st.results.ping):.2f} ms");end_time=time.time();print(f"Duration:       [{int(time_spent // 3600):02d}:{int(time_spent % 3600 // 60):02d}:{int(time_spent % 60):02d}.{int((time_spent - int(time_spent)) * 1000):02d}]\n");break
+                    try:start_time=time.time();st=speedtest.Speedtest();st.get_best_server();time_spent=end_time-start_time;print(f"Download speed: {(st.download() / 10000000):.2f} Mbps\nUpload speed:   {(st.upload() / 1000000):.2f} Mbps\nPing:           {(st.results.ping):.2f} ms");end_time=time.time();print(f"Duration:       [{int(time_spent//3600):02d}:{int(time_spent%3600//60):02d}:{int(time_spent%60):02d}.{int((time_spent-int(time_spent))*1000):02d}]\n");break
                     except TimeoutError:time.sleep(5);continue
             elif command == "CheckInternet":
                 try:requests.get("https://www.google.com",timeout=10).raise_for_status();internet_connection=True
@@ -489,13 +489,13 @@ RandomChoice
                     else:continue
             elif main_command == "Exit":
                 if len(parts) > 1:
-                    if " ".join(parts[1:]) == "Imm":end_time=time.time();time_spent=end_time - start_time;print(f"Exited, Time spent: [{int(time_spent // 3600):02d}:{int(time_spent % 3600 // 60):02d}:{int(time_spent % 60):02d}.{int((time_spent - int(time_spent)) * 1000):02d}]\033[m\n");exit()
+                    if " ".join(parts[1:]) == "Imm":end_time=time.time();time_spent=end_time-start_time;print(f"Exited, Time spent: [{int(time_spent//3600):02d}:{int(time_spent%3600//60):02d}:{int(time_spent%60):02d}.{int((time_spent-int(time_spent))*1000):02d}]\033[m\n");exit()
                     else:print("Invalid argument. Options are only Imm\n")
                 else:
                     print()
                     while True:
                         confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
-                        if confirm == "y":end_time=time.time();time_spent=end_time - start_time;print(f"\033[A\033[KExited, Time spent: [{int(time_spent // 3600):02d}:{int(time_spent % 3600 // 60):02d}:{int(time_spent % 60):02d}.{int((time_spent - int(time_spent)) * 1000):02d}]\033[m\n");exit()
+                        if confirm == "y":end_time=time.time();time_spent=end_time-start_time;print(f"\033[A\033[KExited, Time spent: [{int(time_spent//3600):02d}:{int(time_spent%3600//60):02d}:{int(time_spent%60):02d}.{int((time_spent-int(time_spent))*1000):02d}]\033[m\n");exit()
                         elif confirm == "n":print("\033[A\033[KExit cancelled.\n");break
                         else:continue
             else:
