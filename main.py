@@ -75,6 +75,7 @@ def install_package(package_name)->True|False:
     try:subprocess.check_call(["pkg","install",package_name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);return True
     except subprocess.CalledProcessError:return False
 
+"""
 missing_packages=[pkg for pkg in REQUIRED_PACKAGES if not package_available(pkg)]
 if missing_packages:
     print("Installing missing packages...\n")
@@ -86,6 +87,7 @@ if missing_packages:
         print("\nWarning: Some packages are still missing after installation:")
         for mod in still_missing:print(f"- {package} (tried installing {package})")
         print(f"\nPlease install manually using \"pkg install {' '.join(still_missing)}\" and restart the script.\n");exit(1)
+"""
 
 # Data
 
@@ -354,7 +356,6 @@ Timer
                 if len(parts) > 1:
                     new_alarm_file_name=" ".join(parts[1:]).strip();allowed_formats="mp3 wav m4a acc flac ogg".split()
                     if not new_alarm_file_name:print("Invalid argument. AlarmFileName cannot be empty.\n");continue
-                    if new_alarm_file_name == "Default":shelve.open("data.db")["AlarmFileName"]="alarm_sound.mp3" if os.path.exists("alarm_sound.mp3") else None;print()
                     if not new_alarm_file_name.endswith(tuple(["."+x for x in allowed_formats])):print(f"Invalid argument. AlarmFileName allowed formats are only {', '.join(['.'+x for x in allowed_formats][:-1])+' and .'+allowed_formats[len(allowed_formats)-1]}.\n");continue
                     if not os.path.exists(new_alarm_file_name):print("Invalid argument. AlarmFileName doesn't exist.\n");continue
                     else:shelve.open("data.db")["AlarmFileName"]=new_alarm_file_name;print()
@@ -363,9 +364,15 @@ ChangeAlarmSound
 └── Arg1
     ├── (Default)
     └── <<AlarmFileName>>\n""")
-            elif command == "Pass":print() # Litterally useless.
+            elif command == "Pass":print() # Placeholder command.
             elif command == "SeeData":print(f"{data()}\n")
-            elif command == "GetSystemInfo":subprocess.run(["fastfetch"]);print()
+            elif command == "Clear":print("\033c",end="")
+            elif command == "RerunCode":
+                try:subprocess.run(["python","-c","pass"]);print("\033c",end="");rerun()
+                except PermissionError:print()
+            elif command == "GetSystemInfo":
+                if package_available("fastfetch"):subprocess.run(["fastfetch"]);print()
+                else:print()
             elif command == "Matrix":
                 while True:
                     try:
@@ -454,8 +461,6 @@ TimeToLoadUrl
                     try:print(calendar.calendar(int(" ".join(parts[1:]))));print("" if " ".join(parts[1:]) != str(datetime.date.today().year) else f"Date: {time.strftime(f'%Y/%m/%d')}\n\n",end="")
                     except ValueError:print("Invalid argument. Year must be a number.\n")
                 else:print(calendar.calendar(datetime.date.today().year));print(f"Date: {time.strftime(f'%Y/%m/%d')}\n")
-            elif command == "Clear":print("\033c",end="")
-            elif command == "RerunCode":print("\033c",end="");rerun()
             elif main_command == "ChangeUsername":
                 if len(parts) > 1:
                     new_name=" ".join(parts[1:]).lstrip()
