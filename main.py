@@ -287,8 +287,11 @@ Calendar
     ├── ()
     └── <<Year>>
 Timer
-└── Arg1
-    └── <<Time>>
+├── Arg1
+│   └── <<Time>>
+└── Arg2
+    ├── ()
+    └── (Alarm)
 Stopwatch
 └── Arg1
     ├── (Start)
@@ -311,6 +314,42 @@ CheckInternet
 CheckInternetSpeed
 """) # │ ├ └ ─
 
+            elif main_command == "Timer":
+                if len(parts) >= 2:
+                    try:
+                        time_str=parts[1];time_parts=list(map(int,time_str.split(":")))
+                        if len(time_parts) == 2:hours=0;minutes,seconds=time_parts
+                        elif len(time_parts) == 3:hours,minutes,seconds=time_parts
+                        else:print("Invalid argument. Please use the format HH:MM:SS.\n")
+                        if any(t < 0 for t in (hours,minutes,seconds)):print("Invalid argument. Please enter non-negative values for hours, minutes and seconds.\n");continue
+                        total_seconds=hours*3600+minutes*60+seconds
+                        if total_seconds == 0:print("Invalid argument. Timer duration cannot be zero.\n");continue
+                        if len(parts) >= 3:
+                            if " ".join(parts[2:]) == "Alarm":alarm=True
+                            else:print("Invalid argument. Options are only Alarm.\n");continue
+                        else:alarm=False
+                        try:
+                            i=total_seconds
+                            while i >= 0:
+                                print(f"\r{i//3600:02d}:{(i%3600)//60:02d}:{i%60:02d}",end="",flush=True)
+                                if i > 0:time.sleep(1)
+                                i-=1
+                            print();print("\033[A\033[KTimes up!")
+                            alarm_file=alarm_file_name()
+                            if package_available("play-audio") and os.path.exists(alarm_file) and alarm:
+                                while True:
+                                    try:subprocess.run(["play-audio","-s","alarm",alarm_file]);time.sleep(.5);continue
+                                    except (KeyboardInterrupt,EOFError):raise KeyboardInterrupt
+                            else:print()
+                        except (KeyboardInterrupt,EOFError):print();print()
+                    except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
+                else:print("""Invalid usage. Usage
+Timer
+├── Arg1
+│   └── <<Time>>
+└── Arg2
+    ├── ()
+    └── (Alarm)\n""")
             elif main_command == "ChangeAlarmSound":
                 if len(parts) > 1:
                     new_alarm_file_name=" ".join(parts[1:]).strip();allowed_formats="mp3 wav m4a acc flac ogg".split()
@@ -324,35 +363,6 @@ ChangeAlarmSound
 └── Arg1
     ├── (Default)
     └── <<AlarmFileName>>\n""")
-            elif main_command == "Timer":
-                if len(parts) > 1:
-                    try:
-                        time_str=" ".join(parts[1:]);time_parts=list(map(int,time_str.split(":")))
-                        if len(time_parts) == 2:hours=0;minutes,seconds=time_parts
-                        elif len(time_parts) == 3:hours,minutes,seconds=time_parts
-                        else:print("Invalid argument. Please use the format HH:MM:SS.\n")
-                        if any(t < 0 for t in (hours,minutes,seconds)):print("Invalid argument. Please enter non-negative values for hours, minutes and seconds.\n");continue
-                        total_seconds=hours*3600+minutes*60+seconds
-                        if total_seconds == 0:print("Invalid argument. Timer duration cannot be zero.\n");continue
-                        try:
-                            i=total_seconds
-                            while i >= 0:
-                                print(f"\r{i//3600:02d}:{(i%3600)//60:02d}:{i%60:02d}",end="",flush=True)
-                                if i > 0:time.sleep(1)
-                                i-=1
-                            print();print("\033[A\033[KTimes up!")
-                            alarm_file=alarm_file_name()
-                            if package_available("play-audio") and os.path.exists(alarm_file):
-                                while True:
-                                    try:subprocess.run(["play-audio","-s","alarm",alarm_file]);time.sleep(.5);continue
-                                    except (KeyboardInterrupt,EOFError):raise KeyboardInterrupt
-                            else:print()
-                        except (KeyboardInterrupt,EOFError):print();print()
-                    except ValueError as e:print(f"Invalid argument. {e}. Please use the format HH:MM:SS or MM:SS.\n")
-                else:print("""Invalid usage. Usage
-Timer
-└── Arg1
-    └── <<Time>>\n""")
             elif command == "Pass":print() # Litterally useless.
             elif command == "SeeData":print(f"{data()}\n")
             elif command == "GetSystemInfo":subprocess.run(["fastfetch"]);print()
