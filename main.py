@@ -360,7 +360,7 @@ Timer
                 while True:
                     try:
                         for i in range(1,5+1):
-                            if random.random() < .09 ** i:print(end="\n"*i,flush=True)
+                            if random.random() < .09**i:print(end="\n"*i,flush=True)
                         random_gibberish_code=list("".join(random.choice(string.ascii_letters+string.digits+string.punctuation+(" "*10))) for _ in range(random.randint(random.randint(28,60),random.randint(84,90))))
                         for _ in range(1,random.randint(1,10)+1):pos=random.randint(0,len(random_gibberish_code));random_gibberish_code[pos:pos]=list(random.choice([random.choice(("".join(char.upper() if random.random() < .5 else char.lower() for char in keyword),keyword.upper(),keyword.lower(),keyword)) for keyword in keyword.kwlist+["then","fi","do","done","esac","function","select","read","echo","test",]+["auto","break","case","char","const","continue","default","do","double","else","enum","extern","float","for","goto","if","inline","int","long","register","restrict","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while","_Alignas","_Alignof","_Atomic","_Bool","_Complex","_Generic","_Imaginary","_Noreturn","_Static_assert","_Thread_local",]]))
                         print("\033[m"+random.choice(["\033[32m","\033[1;32m"])+"".join(random_gibberish_code),flush=True);time.sleep(.01)
