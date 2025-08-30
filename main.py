@@ -213,6 +213,8 @@ ChangeAlarmSound
                     with shelve.open("data.db") as db:temp_list=db["CommandHistory"];temp_list.append(f"{command} - {time_of_command}");db["CommandHistory"]=temp_list
             else:print("\033[A\033[K\033[A\033[K",end="");continue
             if main_command == "UpdateCode":
+                try:subprocess.run(["python","-c","pass"])
+                except PermissionError:print();continue
                 repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip" # Url to the github repository to download zip file.
                 ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version" # Url to the github repository's version raw file.
                 if len(parts) > 1:
@@ -234,8 +236,7 @@ ChangeAlarmSound
                             if version() < float(latest_version.text):
                                 print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
                                 for file in os.listdir():
-                                    if file not in protected_files:
-                                        if file not in protected_files:subprocess.run(["rm","-rf",file])
+                                    if file not in protected_files:subprocess.run(["rm","-rf",file])
                                 with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
                                     root_folder=zip_ref.namelist()[0].split("/")[0]
                                     for file in zip_ref.namelist(): # Extract all files, removing the root folder prefix.
@@ -498,7 +499,10 @@ RandomChoice
                 print()
                 while True:
                     confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
-                    if confirm == "y":print("\033[A\033[K",end="");os.remove("Data");print("\033c",end="");rerun()
+                    if confirm == "y":
+                        print("\033[A\033[K",end="")
+                        try:subprocess.run(["rm","data.db"]);print("\033c",end="");rerun()
+                        except PermissionError:print()
                     elif confirm == "n":print("\033[A\033[KDeletion of data cancelled.\n");break
                     else:continue
             elif main_command == "Exit":
