@@ -234,7 +234,8 @@ ChangeAlarmSound
                             if version() < float(latest_version.text):
                                 print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
                                 for file in os.listdir():
-                                    if file not in protected_files:os.remove(file)
+                                    if file not in protected_files:
+                                        if file not in protected_files:subprocess.run(["rm","-rf",file])
                                 with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
                                     root_folder=zip_ref.namelist()[0].split("/")[0]
                                     for file in zip_ref.namelist(): # Extract all files, removing the root folder prefix.
