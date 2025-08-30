@@ -15,7 +15,6 @@ ChangeUsername
     └── <<Username>>
 ChangeAlarmSound
 └── Arg1
-    ├── (Default)
     └── <<AlarmFileName>>
 Clear
 Pass
@@ -81,7 +80,6 @@ python main.py
 
 ## 📦 Dependencies & 🛠️ Installation
 
-- [Faker](https://pypi.org/project/Faker)
 - [requests](https://pypi.org/project/requests/)
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
@@ -90,7 +88,6 @@ pip install Faker requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
-- [espeak](https://github.com/espeak-ng/espeak-ng)
 ```bash
-pkg install play-audio fastfetch espeak
+pkg install play-audio fastfetch
 ```
