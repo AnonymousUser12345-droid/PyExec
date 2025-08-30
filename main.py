@@ -216,7 +216,7 @@ ChangeAlarmSound
                 repo_url="https://github.com/AnonymousUser12345-droid/PyExec/archive/refs/heads/main.zip" # Url to the github repository to download zip file.
                 ver_url="https://raw.githubusercontent.com/AnonymousUser12345-droid/PyExec/main/version" # Url to the github repository's version raw file.
                 if len(parts) > 1:
-                    if " ".join(parts[1:]) == "Check":latest_version=requests.get(ver_url);latest_version.raise_for_status();print(f"Current version  : {version()}\nLatest version   : {latest_version.text}\nUpdate available : {version() > float(latest_version.text)}\nUp to date       : {version() == float(latest_version.text)}\n")
+                    if " ".join(parts[1:]) == "Check":latest_version=requests.get(ver_url);latest_version.raise_for_status();print(f"Current version  : {version()}\nLatest version   : {latest_version.text}\nUpdate available : {version() < float(latest_version.text)}\nUp to date       : {version() == float(latest_version.text)}\n")
                     else:print("Invalid argument. Options are only Check.\n")
                 else:
                     print()
@@ -231,7 +231,7 @@ ChangeAlarmSound
                             response.raise_for_status()
                             latest_version=requests.get(ver_url)
                             latest_version.raise_for_status()
-                            if version() > float(latest_version.text):
+                            if version() < float(latest_version.text):
                                 print(f"\033[A\033[KStarting update. Please don't exit.");time.sleep(10);print("\033[A\033[K",end="") # Start update with 10 seconds countdown.
                                 for file in os.listdir():
                                     if file not in protected_files:os.remove(file)
