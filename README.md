@@ -84,7 +84,7 @@ python main.py
 - [simpleeval](https://pypi.org/project/simpleeval/)
 - [speedtest-cli](https://pypi.org/project/speedtest-cli/)
 ```bash
-pip install Faker requests simpleeval speedtest-cli
+pip install requests simpleeval speedtest-cli
 ```
 - [play-audio](https://github.com/termux/play-audio)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
