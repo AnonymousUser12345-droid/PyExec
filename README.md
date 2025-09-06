@@ -83,6 +83,10 @@ CheckInternet
 CheckInternetSpeed
 ```
 
+## 📷 Screenshot
+
+![screenshot](screenshot.png)
+
 ## 🛠️ Installation
 
 ```bash
