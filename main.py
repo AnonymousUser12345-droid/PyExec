@@ -112,6 +112,9 @@ def getch(prompt:str="")->str:
 def not_implemented(main_command:str)->None:
     print(f"Command functionality has not yet been implemented: \"{main_command}\".\n")
 
+def has_permission_error()->None:
+    subprocess.run(["python","-c","pass"])
+
 def rerun()->None:
     subprocess.run([sys.executable,__file__])
 
@@ -490,7 +493,7 @@ ChangeAlarmSound
             elif command == "SeeData":print(f"{data()}\n")
             elif command == "Clear":print("\033c",end="")
             elif command == "RerunCode":
-                try:subprocess.run(["python","-c","pass"]);print("\033c",end="");rerun()
+                try:has_permission_error();print("\033c",end="");rerun()
                 except PermissionError:print()
             elif command == "GetSystemInfo":
                 if package_available("fastfetch"):subprocess.run(["fastfetch"]);print()
@@ -614,7 +617,7 @@ RandomChoice
                     confirm=getch("\033[A\033[KConfirm (Y/N): ").lower()
                     if confirm == "y":
                         print("\033[A\033[K",end="")
-                        try:subprocess.run(["rm","data.db"]);print("\033c",end="");rerun()
+                        try:has_permission_error();subprocess.run(["rm","data.db"]);print("\033c",end="");rerun()
                         except PermissionError:print()
                     elif confirm == "n":print("\033[A\033[KDeletion of data cancelled.\n");break
                     else:continue
@@ -636,6 +639,7 @@ RandomChoice
                     if suggestions:suggestions_original_case=[commands[commands_lower.index(s)] for s in suggestions];print((f"Did you mean: \"{suggestions_original_case[0]}\".\n") if len(suggestions_original_case) == 1 else ("Did you mean one of these: "+", ".join(f"\"{s}\"" for s in suggestions_original_case)+".\n"))
                     else:print(f"Unknown command: \"{main_command}\".\n")
         except (KeyboardInterrupt,EOFError):print("\nError: PyExec interrupted.\n");exit()
+        except PermissionError:print("Error: Permission error.\n")
         except (requests.ConnectionError,requests.Timeout):print("Error: Internet unstable.\n")
         except Exception as error:print(f"Error: {repr(error)}.\n")
         finally:print("\033[m\033[?25h",end="")
