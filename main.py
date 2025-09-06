@@ -637,7 +637,7 @@ RandomChoice
                     else:print(f"Unknown command: \"{main_command}\".\n")
         except (KeyboardInterrupt,EOFError):print("\nError: PyExec interrupted.\n");exit()
         except (requests.ConnectionError,requests.Timeout):print("Error: Internet unstable.\n")
-        except Exception as error:raise error#print(f"Error: {repr(error)}.\n")
+        except Exception as error:print(f"Error: {repr(error)}.\n")
         finally:print("\033[m\033[?25h",end="")
 
 if __name__ == "__main__":main()
