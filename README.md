@@ -82,9 +82,6 @@ TimeToLoadUrl
 CheckInternet
 CheckInternetSpeed
 ```
-## 📷 Screenshot
-
-![screenshot](screenshot.png)
 
 ## 🛠️ Installation
 
