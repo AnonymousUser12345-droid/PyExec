@@ -18,6 +18,21 @@ ChangeAlarmSound
     └── <<AlarmFileName>>
 Clear
 Pass
+Usage
+└── Arg1
+    ├── (CommandHistory)
+    ├── (ChangeUsername)
+    ├── (ChangeAlarmSound)
+    ├── (Usage)
+    ├── (UpdateCode)
+    ├── (Exit)
+    ├── (DaysUntil)
+    ├── (Calendar)
+    ├── (Timer)
+    ├── (Stopwatch)
+    ├── (RandomChoice)
+    ├── (RandomInteger)
+    └── (TimeToLoadUrl)
 SeeData
 DeleteData
 RerunCode
@@ -41,8 +56,11 @@ Calendar
     ├── ()
     └── <<Year>>
 Timer
-└── Arg1
-    └── <<Time>>
+├── Arg1
+│   └── <<Time>>
+└── Arg2
+    ├── ()
+    └── (Alarm)
 Stopwatch
 └── Arg1
     ├── (Start)
