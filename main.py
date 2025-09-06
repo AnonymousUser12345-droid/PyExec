@@ -2,12 +2,11 @@
 
 import calendar
 import datetime
-import dbm # For getting error if database file gets corrupted.
+import dbm
 import difflib
 import importlib
 import io
 import itertools
-import json
 import keyword
 import os
 import random
@@ -18,7 +17,6 @@ import shutil
 import string
 import subprocess
 import sys
-import tempfile
 import termios
 import time
 import tty
@@ -190,6 +188,7 @@ GetSystemInfo
 SeeData
 Pass
 ChangeAlarmSound
+Usage
 
 """.split()
     input_text="\033[1;90m╰── \033[m>>>\033[1;37m "
@@ -262,10 +261,24 @@ ChangeUsername
     └── <<Username>>
 ChangeAlarmSound
 └── Arg1
-    ├── (Default)
     └── <<AlarmFileName>>
 Clear
 Pass
+Usage
+└── Arg1
+    ├── (CommandHistory)
+    ├── (ChangeUsername)
+    ├── (ChangeAlarmSound)
+    ├── (Usage)
+    ├── (UpdateCode)
+    ├── (Exit)
+    ├── (DaysUntil)
+    ├── (Calendar)
+    ├── (Timer)
+    ├── (Stopwatch)
+    ├── (RandomChoice)
+    ├── (RandomInteger)
+    └── (TimeToLoadUrl)
 SeeData
 DeleteData
 RerunCode
@@ -316,6 +329,117 @@ CheckInternet
 CheckInternetSpeed
 """) # │ ├ └ ─
 
+            elif main_command == "Usage":
+                if len(parts) > 1:
+                    commands_with_args="CommandHistory ChangeUsername ChangeAlarmSound Usage UpdateCode Exit DaysUntil Calendar Timer Stopwatch RandomChoice RandomInteger TimeToLoadUrl".split()
+                    if " ".join(parts[1:]) == "CommandHistory":print("""Command's usage
+CommandHistory
+└── Arg1
+    ├── (List)
+    └── (Delete)\n""")
+                    elif " ".join(parts[1:]) == "ChangeUsername":print("""Command's usage
+ChangeUsername
+└── Arg1
+    ├── (Default)
+    └── <<Username>>\n""")
+                    elif " ".join(parts[1:]) == "ChangeAlarmSound":print("""Command's usage
+ChangeAlarmSound
+└── Arg1
+    └── <<AlarmFileName>>\n""")
+                    elif " ".join(parts[1:]) == "Usage":print("""Command's usage
+Usage
+└── Arg1
+    ├── (CommandHistory)
+    ├── (ChangeUsername)
+    ├── (ChangeAlarmSound)
+    ├── (Usage)
+    ├── (UpdateCode)
+    ├── (Exit)
+    ├── (DaysUntil)
+    ├── (Calendar)
+    ├── (Timer)
+    ├── (Stopwatch)
+    ├── (RandomChoice)
+    ├── (RandomInteger)
+    └── (TimeToLoadUrl)\n""")
+                    elif " ".join(parts[1:]) == "UpdateCode":print("""Command's usage
+UpdateCode
+└── Arg1
+    ├── ()
+    └── (Check)\n""")
+                    elif " ".join(parts[1:]) == "Exit":print("""Command's usage
+Exit
+└── Arg1
+    ├── ()
+    └── (Imm)\n""")
+                    elif " ".join(parts[1:]) == "DaysUntil":print("""Command's usage
+DaysUntil
+├── Arg1
+│   └── <<Date>>
+└── Arg2
+    ├── ()
+    └── <<Date>>\n""")
+                    elif " ".join(parts[1:]) == "Calendar":print("""Command's usage
+Calendar
+└── Arg1
+    ├── ()
+    └── <<Year>>\n""")
+                    elif " ".join(parts[1:]) == "Timer":print("""Command's usage
+Timer
+├── Arg1
+│   └── <<Time>>
+└── Arg2
+    ├── ()
+    └── (Alarm)\n""")
+                    elif " ".join(parts[1:]) == "Stopwatch":print("""Command's usage
+Stopwatch
+└── Arg1
+    ├── (Start)
+    ├── (Stop)
+    ├── (Reset)
+    └── (RecentElapsedTime)\n""")
+                    elif " ".join(parts[1:]) == "RandomChoice":print("""Command's usage
+RandomChoice
+└── Arg1
+    └── <<List>>\n""")
+                    elif " ".join(parts[1:]) == "RandomInteger":print("""Command's usage
+RandomInteger
+├── Arg1
+│   └── <<Integer>>
+└── Arg2
+    └── <<Integer>>\n""")
+                    elif " ".join(parts[1:]) == "TimeToLoadUrl":print("""Command's usage
+TimeToLoadUrl
+└── Arg1
+    └── <<Url>>\n""")
+                    else:print(f"Invalid argument. Options are only {', '.join(commands_with_args[:-1])+', and '+commands_with_args[len(commands_with_args)-1]}.\n")
+                else:print("""Invalid usage. Usage
+Usage
+└── Arg1
+    ├── (CommandHistory)
+    ├── (ChangeUsername)
+    ├── (ChangeAlarmSound)
+    ├── (Usage)
+    ├── (UpdateCode)
+    ├── (Exit)
+    ├── (DaysUntil)
+    ├── (Calendar)
+    ├── (Timer)
+    ├── (Stopwatch)
+    ├── (RandomChoice)
+    ├── (RandomInteger)
+    └── (TimeToLoadUrl)\n""")
+            elif command == "Matrix":
+                random_case=lambda x:"".join(random.choice([c.upper(),c.lower()]) for c in x);characters=string.ascii_letters+string.digits+string.punctuation+"          ";keywords=keyword.kwlist+"arg attr auto bad bin box byte case change char cmd connected const default define disconnected do done double dump echo enum esac eval extern fail false fi float format func get good goto gpu inline input int interface internal json load long loop now over pass pointer pos process range raw read reg repeat restrict retrieve select short signed sizeof static store struct success swap switch test then true type unicode union val var void volatile".split();newline_probability=[.09,.0081,7.29e-4,6.561e-5]
+                while True:
+                    try:
+                        if random.random() < 25:
+                            for i,probability in enumerate(newline_probability,1):
+                                if random.random() < probability:print(end="\n"*i,flush=True)
+                        gibberish_characters=list("".join(random.choice(characters) for _ in range(random.randint(46,60),random.randint(97,100))))
+                        for _ in range(1,random.randint(1,10)+1):pos=random.randint(0,len(gibberish_characters));picked_keyword=random.choice(keywords);gibberish_characters[pos:pos]=list(random.choice([random_case(kw),kw.upper(),kw.lower(),kw]) for kw in picked_keyword)
+                        print("\033[m{}{}".format(random.choice(['\033[32m','\033[1;32m']),"".join(gibberish_characters)),flush=True);time.sleep(0.01)
+                    except (KeyboardInterrupt,EOFError):print();print();break
             elif main_command == "Timer":
                 if len(parts) >= 2:
                     try:
@@ -336,8 +460,7 @@ CheckInternetSpeed
                                 print(f"\r{i//3600:02d}:{(i%3600)//60:02d}:{i%60:02d}",end="",flush=True)
                                 if i > 0:time.sleep(1)
                                 i-=1
-                            print();print("\033[A\033[KTimes up!")
-                            alarm_file=alarm_file_name()
+                            print();print("\033[A\033[KTimes up!");alarm_file=alarm_file_name() or ""
                             if package_available("play-audio") and os.path.exists(alarm_file) and alarm:
                                 while True:
                                     try:subprocess.run(["play-audio","-s","alarm",alarm_file]);time.sleep(.5);continue
@@ -354,15 +477,14 @@ Timer
     └── (Alarm)\n""")
             elif main_command == "ChangeAlarmSound":
                 if len(parts) > 1:
-                    new_alarm_file_name=" ".join(parts[1:]).strip();allowed_formats="mp3 wav m4a acc flac ogg".split()
+                    new_alarm_file_name=" ".join(parts[1:]);allowed_formats="mp3 wav m4a aac flac ogg aiff alac wma".split()
                     if not new_alarm_file_name:print("Invalid argument. AlarmFileName cannot be empty.\n");continue
-                    if not new_alarm_file_name.endswith(tuple(["."+x for x in allowed_formats])):print(f"Invalid argument. AlarmFileName allowed formats are only {', '.join(['.'+x for x in allowed_formats][:-1])+' and .'+allowed_formats[len(allowed_formats)-1]}.\n");continue
+                    if not new_alarm_file_name.endswith(tuple(["."+x for x in allowed_formats])):print(f"Invalid argument. AlarmFileName allowed formats are only {', '.join(['.'+x for x in allowed_formats][:-1])+', and .'+allowed_formats[len(allowed_formats)-1]}.\n");continue
                     if not os.path.exists(new_alarm_file_name):print("Invalid argument. AlarmFileName doesn't exist.\n");continue
                     else:shelve.open("data.db")["AlarmFileName"]=new_alarm_file_name;print()
                 else:print("""Invalid usage. Usage
 ChangeAlarmSound
 └── Arg1
-    ├── (Default)
     └── <<AlarmFileName>>\n""")
             elif command == "Pass":print() # Placeholder command.
             elif command == "SeeData":print(f"{data()}\n")
@@ -373,15 +495,6 @@ ChangeAlarmSound
             elif command == "GetSystemInfo":
                 if package_available("fastfetch"):subprocess.run(["fastfetch"]);print()
                 else:print()
-            elif command == "Matrix":
-                while True:
-                    try:
-                        for i in range(1,5+1):
-                            if random.random() < .09**i:print(end="\n"*i,flush=True)
-                        random_gibberish_code=list("".join(random.choice(string.ascii_letters+string.digits+string.punctuation+(" "*10))) for _ in range(random.randint(random.randint(28,60),random.randint(84,90))))
-                        for _ in range(1,random.randint(1,10)+1):pos=random.randint(0,len(random_gibberish_code));random_gibberish_code[pos:pos]=list(random.choice([random.choice(("".join(char.upper() if random.random() < .5 else char.lower() for char in keyword),keyword.upper(),keyword.lower(),keyword)) for keyword in keyword.kwlist+["then","fi","do","done","esac","function","select","read","echo","test",]+["auto","break","case","char","const","continue","default","do","double","else","enum","extern","float","for","goto","if","inline","int","long","register","restrict","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while","_Alignas","_Alignof","_Atomic","_Bool","_Complex","_Generic","_Imaginary","_Noreturn","_Static_assert","_Thread_local",]]))
-                        print("\033[m"+random.choice(["\033[32m","\033[1;32m"])+"".join(random_gibberish_code),flush=True);time.sleep(.01)
-                    except (KeyboardInterrupt,EOFError):print();print();break
             elif main_command == "RandomInteger":
                 if len(parts) == 3:
                     try:first_num=int(parts[1])
@@ -524,7 +637,7 @@ RandomChoice
                     else:print(f"Unknown command: \"{main_command}\".\n")
         except (KeyboardInterrupt,EOFError):print("\nError: PyExec interrupted.\n");exit()
         except (requests.ConnectionError,requests.Timeout):print("Error: Internet unstable.\n")
-        except Exception as error:print(f"Error: {repr(error)}.\n")
+        except Exception as error:raise error#print(f"Error: {repr(error)}.\n")
         finally:print("\033[m\033[?25h",end="")
 
 if __name__ == "__main__":main()
